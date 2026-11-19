@@ -48,7 +48,6 @@
       position: relative;
     }
 
-    /* Latar Belakang Pastel Cerah */
     .bg-spotlight {
       position: fixed;
       inset: 0;
@@ -60,7 +59,6 @@
         radial-gradient(circle at 50% 92%, rgba(52, 211, 153, 0.22) 0%, transparent 50%);
     }
 
-    /* Dekorasi Not Balok Melayang di Latar */
     .music-notes-layer {
       position: fixed;
       inset: 0;
@@ -88,7 +86,6 @@
       50% { transform: translateY(-16px) rotate(8deg) scale(1.06); }
     }
 
-    /* Sticky Top Navbar */
     .navbar {
       position: sticky;
       top: 0;
@@ -161,23 +158,21 @@
       border-color: #d97706;
     }
 
-    /* Main Container */
     .container {
       max-width: 1120px;
       width: 100%;
       margin: 0 auto;
-      padding: 20px 14px 32px;
+      padding: 22px 14px 32px;
       position: relative;
       z-index: 1;
       flex: 1;
     }
 
-    /* Hero Header */
     header {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
       position: relative;
-      padding: 12px 8px 6px;
+      padding: 14px 8px 10px;
     }
 
     .header-stave-svg {
@@ -187,7 +182,7 @@
       transform: translate(-50%, -50%);
       width: 100%;
       max-width: 780px;
-      height: 130px;
+      height: 120px;
       pointer-events: none;
       z-index: -1;
       opacity: 0.38;
@@ -216,7 +211,6 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 10px;
     }
 
     .title-note-icon {
@@ -248,28 +242,14 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .subtitle {
-      color: var(--text-body);
-      font-size: 0.88rem;
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.55;
-      background: rgba(255, 255, 255, 0.65);
-      padding: 6px 14px;
-      border-radius: 12px;
-    }
-
-    /* Mobile Quick Jump Bar */
     .mobile-jump-bar {
       display: flex;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     @media (min-width: 900px) {
-      .mobile-jump-bar {
-        display: none;
-      }
+      .mobile-jump-bar { display: none; }
     }
 
     .jump-pill {
@@ -291,27 +271,23 @@
       background: var(--sky-light);
     }
 
-    /* Status Banner Pilihan User */
     .status-banner {
       background: linear-gradient(135deg, #ecfdf5, #e0f2fe);
       border: 1px solid #6ee7b7;
       color: #065f46;
-      padding: 12px 15px;
+      padding: 11px 16px;
       border-radius: 14px;
       text-align: center;
       font-size: 0.84rem;
       font-weight: 600;
       margin-bottom: 18px;
       display: none;
-      line-height: 1.45;
+      line-height: 1.4;
       box-shadow: 0 6px 18px rgba(16, 185, 129, 0.1);
     }
 
-    .status-banner.visible {
-      display: block;
-    }
+    .status-banner.visible { display: block; }
 
-    /* Grid Layout */
     .grid-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -326,7 +302,6 @@
       }
     }
 
-    /* Bright Crisp Card */
     .card {
       background: var(--surface);
       backdrop-filter: blur(14px);
@@ -370,7 +345,6 @@
       flex-shrink: 0;
     }
 
-    /* Daftar Peserta */
     .candidate-list {
       display: flex;
       flex-direction: column;
@@ -462,7 +436,6 @@
       font-weight: 800;
     }
 
-    /* Tombol Vote Instan */
     .vote-btn {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #ffffff;
@@ -497,7 +470,6 @@
       transform: none;
     }
 
-    /* Penyesuaian Khusus Layar HP Kecil */
     @media (max-width: 480px) {
       .container { padding: 16px 10px 28px; }
       .card { padding: 14px 12px; border-radius: 16px; }
@@ -510,7 +482,6 @@
       .title-note-icon { width: 24px; height: 24px; }
     }
 
-    /* Grafik & Klasemen */
     .chart-wrapper {
       position: relative;
       width: 100%;
@@ -521,7 +492,7 @@
     }
 
     .standings-header {
-      margin-top: 18px;
+      margin-top: 16px;
       padding-top: 14px;
       border-top: 1px solid var(--border);
       font-size: 0.78rem;
@@ -586,9 +557,7 @@
       flex-shrink: 0;
     }
 
-    .rank-1 .standing-score {
-      color: var(--amber-dark);
-    }
+    .rank-1 .standing-score { color: var(--amber-dark); }
 
     .progress-track {
       width: 100%;
@@ -605,20 +574,8 @@
       transition: width 0.25s ease-out;
     }
 
-    .rank-1 .progress-fill {
-      background: linear-gradient(90deg, #f59e0b, #fbbf24);
-    }
+    .rank-1 .progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
 
-    .chart-note {
-      margin-top: 14px;
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    /* =========================================================================
-       NOTIFIKASI BERANIMASI DI TENGAH LAYAR (INSTANT POP-IN)
-       ========================================================================= */
     .center-notif-backdrop {
       position: fixed;
       inset: 0;
@@ -673,37 +630,12 @@
       font-weight: 800;
     }
 
-    .notif-icon-ring.success {
-      background: #d1fae5;
-      border: 2px solid #10b981;
-      color: #059669;
-    }
+    .notif-icon-ring.success { background: #d1fae5; border: 2px solid #10b981; color: #059669; }
+    .notif-icon-ring.warning { background: #fef3c7; border: 2px solid #f59e0b; color: #d97706; }
+    .notif-icon-ring.error { background: #fee2e2; border: 2px solid #ef4444; color: #dc2626; }
 
-    .notif-icon-ring.warning {
-      background: #fef3c7;
-      border: 2px solid #f59e0b;
-      color: #d97706;
-    }
-
-    .notif-icon-ring.error {
-      background: #fee2e2;
-      border: 2px solid #ef4444;
-      color: #dc2626;
-    }
-
-    .center-notif-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 5px;
-    }
-
-    .center-notif-msg {
-      font-size: 0.85rem;
-      color: var(--text-body);
-      line-height: 1.45;
-      margin-bottom: 12px;
-    }
+    .center-notif-title { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+    .center-notif-msg { font-size: 0.85rem; color: var(--text-body); line-height: 1.45; margin-bottom: 12px; }
 
     .notif-timer-bar {
       position: absolute;
@@ -715,18 +647,13 @@
       transform-origin: left;
     }
 
-    .notif-timer-bar.animating {
-      animation: shrinkTimer linear forwards;
-    }
+    .notif-timer-bar.animating { animation: shrinkTimer linear forwards; }
 
     @keyframes shrinkTimer {
       from { transform: scaleX(1); }
       to { transform: scaleX(0); }
     }
 
-    /* =========================================================================
-       MODAL KONFIRMASI & PANEL ADMIN CERAH
-       ========================================================================= */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -743,18 +670,15 @@
       transition: opacity 0.16s ease;
     }
 
-    .modal-backdrop.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal-backdrop.active { opacity: 1; pointer-events: auto; }
 
     .modal-box {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 22px;
-      max-width: 410px;
+      max-width: 400px;
       width: 100%;
-      padding: 22px 20px;
+      padding: 24px 20px;
       text-align: center;
       max-height: 88vh;
       overflow-y: auto;
@@ -763,33 +687,11 @@
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .modal-backdrop.active .modal-box {
-      transform: scale(1);
-    }
-
-    .modal-box.admin-modal {
-      max-width: 560px;
-      text-align: left;
-    }
-
-    .modal-box h3 {
-      font-size: 1.12rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .modal-box p {
-      color: var(--text-body);
-      font-size: 0.85rem;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-    }
+    .modal-backdrop.active .modal-box { transform: scale(1); }
+    .modal-box.admin-modal { max-width: 560px; text-align: left; }
+    .modal-box h3 { font-size: 1.12rem; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+    .modal-box p { color: var(--text-body); font-size: 0.85rem; margin-bottom: 18px; line-height: 1.5; }
+    .modal-actions { display: flex; gap: 10px; }
 
     .btn {
       padding: 11px 14px;
@@ -801,166 +703,33 @@
       transition: transform 0.12s ease;
     }
 
-    .btn:active:not(:disabled) {
-      transform: scale(0.97);
-    }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-cancel { flex: 1; background: #f1f5f9; color: var(--text-body); border: 1px solid var(--border-strong); }
+    .btn-confirm { flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28); }
+    .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; font-weight: 800; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.28); }
+    .btn-edit-sm { background: #fef3c7; border: 1px solid #fcd34d; color: #b45309; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
+    .btn-del-sm { background: #fee2e2; border: 1px solid #fca5a5; color: #dc2626; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
 
-    .btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text-body); margin-bottom: 6px; }
+    .form-input { width: 100%; background: #f8fafc; border: 1px solid var(--border-strong); color: var(--text); padding: 11px 13px; border-radius: 12px; font-size: 0.86rem; outline: none; }
+    .form-input:focus { background: #ffffff; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
 
-    .btn-cancel {
-      flex: 1;
-      background: #f1f5f9;
-      color: var(--text-body);
-      border: 1px solid var(--border-strong);
-    }
+    .admin-add-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 14px; padding: 12px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .admin-add-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 520px) { .admin-add-inputs { grid-template-columns: 1fr; } }
 
-    .btn-confirm {
-      flex: 1;
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
-    }
+    .admin-candidate-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; max-height: 300px; overflow-y: auto; }
+    .admin-row-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .admin-row-info { min-width: 0; flex: 1; }
+    .admin-row-info strong { display: block; font-size: 0.86rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-row-info span { font-size: 0.74rem; color: var(--text-muted); }
+    .admin-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .danger-zone { background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-    .btn-gold {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #ffffff;
-      font-weight: 800;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.28);
-    }
-
-    .btn-edit-sm {
-      background: #fef3c7;
-      border: 1px solid #fcd34d;
-      color: #b45309;
-      padding: 7px 10px;
-      border-radius: 9px;
-      font-size: 0.75rem;
-    }
-
-    .btn-del-sm {
-      background: #fee2e2;
-      border: 1px solid #fca5a5;
-      color: #dc2626;
-      padding: 7px 10px;
-      border-radius: 9px;
-      font-size: 0.75rem;
-    }
-
-    /* Form Inputs */
-    .form-group {
-      margin-bottom: 12px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-body);
-      margin-bottom: 6px;
-    }
-
-    .form-input {
-      width: 100%;
-      background: #f8fafc;
-      border: 1px solid var(--border-strong);
-      color: var(--text);
-      padding: 11px 13px;
-      border-radius: 12px;
-      font-size: 0.86rem;
-      outline: none;
-    }
-
-    .form-input:focus {
-      background: #ffffff;
-      border-color: var(--sky);
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-    }
-
-    .admin-add-box {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .admin-add-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    @media (max-width: 520px) {
-      .admin-add-inputs { grid-template-columns: 1fr; }
-    }
-
-    .admin-candidate-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 18px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .admin-row-card {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .admin-row-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .admin-row-info strong {
-      display: block;
-      font-size: 0.86rem;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .admin-row-info span {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
-
-    .admin-row-actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .danger-zone {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* Footer */
     footer {
-      margin-top: 32px;
+      margin-top: 28px;
       padding: 18px 16px;
       text-align: center;
       font-size: 0.78rem;
@@ -990,7 +759,6 @@
 
   <div class="bg-spotlight"></div>
 
-  <!-- Layer Dekorasi Not Balok Melayang -->
   <div class="music-notes-layer" aria-hidden="true">
     <svg class="floating-note note-1" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
@@ -1015,7 +783,6 @@
     </svg>
   </div>
 
-  <!-- Top Navbar -->
   <nav class="navbar">
     <div class="nav-inner">
       <div class="live-pill">
@@ -1029,7 +796,6 @@
   </nav>
 
   <div class="container">
-    <!-- Hero Header dengan Garis Paranada & Not Balok -->
     <header>
       <svg class="header-stave-svg" viewBox="0 0 800 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M10 35 Q 200 15, 400 35 T 790 35" stroke="#38bdf8" stroke-width="1.5"/>
@@ -1061,24 +827,16 @@
           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
       </div>
-
-      <p class="subtitle">
-        Dukung penyanyi favorit Anda! Pilih peserta jagoan Anda (setiap peserta maksimal <strong>1 suara</strong> per perangkat).
-      </p>
     </header>
 
-    <!-- Navigasi Cepat Khusus HP -->
     <div class="mobile-jump-bar">
       <a href="#sectionPeserta" class="jump-pill">🎵 Daftar Peserta</a>
       <a href="#sectionGrafik" class="jump-pill">📊 Grafik Live</a>
     </div>
 
-    <!-- Banner Status Pilihan -->
     <div id="statusBanner" class="status-banner"></div>
 
-    <!-- Layout Utama -->
     <div class="grid-layout">
-      <!-- Kolom Daftar Peserta -->
       <section id="sectionPeserta" class="card">
         <div class="card-header">
           <h2 class="card-title">🎵 Daftar Peserta</h2>
@@ -1087,7 +845,6 @@
         <div id="candidateList" class="candidate-list"></div>
       </section>
 
-      <!-- Kolom Grafik Real-Time -->
       <section id="sectionGrafik" class="card">
         <div class="card-header">
           <h2 class="card-title">📊 Grafik Real-Time</h2>
@@ -1097,15 +854,12 @@
           <canvas id="voteChart"></canvas>
         </div>
 
-        <div class="standings-header">🏆 Klasemen Sementara (Transparan)</div>
+        <div class="standings-header">🏆 Klasemen Sementara</div>
         <div id="standingsList" class="standings-list"></div>
-
-        <p class="chart-note" id="syncStatus">Sinkronisasi real-time aktif</p>
       </section>
     </div>
   </div>
 
-  <!-- NOTIFIKASI BERANIMASI TENGAH LAYAR -->
   <div id="centerNotifBackdrop" class="center-notif-backdrop" onclick="hideCenterNotif()">
     <div class="center-notif-card" onclick="event.stopPropagation()">
       <div id="notifIconRing" class="notif-icon-ring success">✓</div>
@@ -1115,7 +869,6 @@
     </div>
   </div>
 
-  <!-- MODAL KONFIRMASI VOTE -->
   <div id="confirmModal" class="modal-backdrop">
     <div class="modal-box">
       <div style="font-size: 38px; margin-bottom: 8px;">🎶</div>
@@ -1128,7 +881,6 @@
     </div>
   </div>
 
-  <!-- MODAL MENU ADMIN -->
   <div id="adminModal" class="modal-backdrop">
     <div class="modal-box admin-modal">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
@@ -1137,7 +889,7 @@
       </div>
 
       <div id="adminLoginSection">
-        <p>Masukkan PIN Admin untuk menambah, mengubah, menghapus peserta, atau me-reset hasil voting.</p>
+        <p>Masukkan PIN Admin untuk mengelola peserta atau me-reset hasil voting.</p>
         <div class="form-group">
           <label for="adminPinInput">PIN Admin</label>
           <input type="password" id="adminPinInput" class="form-input" placeholder="Masukkan PIN Admin..." />
@@ -1146,8 +898,6 @@
       </div>
 
       <div id="adminDashboardSection" style="display: none;">
-        <p style="margin-bottom: 12px;">Perubahan langsung tersimpan ke database dan memperbarui tampilan semua penonton secara otomatis.</p>
-
         <div class="admin-add-box">
           <div class="admin-add-inputs">
             <input type="text" id="newCandidateName" class="form-input" placeholder="Nama Peserta Baru..." />
@@ -1161,7 +911,7 @@
         <div class="danger-zone">
           <div>
             <strong style="font-size: 0.84rem; color: #b91c1c; display: block;">Reset Semua Suara ke 0</strong>
-            <span style="font-size: 0.74rem; color: var(--text-body);">Bersihkan seluruh data uji coba sebelum lomba dimulai.</span>
+            <span style="font-size: 0.74rem; color: var(--text-body);">Bersihkan seluruh data suara sebelum lomba dimulai.</span>
           </div>
           <button class="btn btn-del-sm" style="font-weight: 800; padding: 9px 14px;" id="resetVotesBtn" onclick="openAdminActionConfirm('reset')">Reset ke 0</button>
         </div>
@@ -1169,7 +919,6 @@
     </div>
   </div>
 
-  <!-- MODAL EDIT PESERTA (ADMIN) -->
   <div id="editCandidateModal" class="modal-backdrop">
     <div class="modal-box" style="text-align: left;">
       <h3>✏️ Edit Data Peserta</h3>
@@ -1189,7 +938,6 @@
     </div>
   </div>
 
-  <!-- MODAL KONFIRMASI AKSI ADMIN (HAPUS / RESET) -->
   <div id="adminConfirmModal" class="modal-backdrop">
     <div class="modal-box">
       <div style="font-size: 36px; margin-bottom: 8px;">⚠️</div>
@@ -1208,13 +956,10 @@
   </footer>
 
   <script>
-    // =========================================================================
-    // KONFIGURASI UTAMA (TEMPEL URL WEB APP APPS SCRIPT ANDA DI BAWAH INI)
-    // =========================================================================
     const CONFIG = {
       SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwrTyY8jCRrHgnz1Th5VRhvgJrRoGjDKfkF_fo9_oUndhMIF4IWDQ9iBbcl772ffPCnbQ/exec",
       DEMO_ADMIN_PIN: "BKK2026",
-      POLLING_INTERVAL_MS: 1500, // Sinkronisasi cepat setiap 1,5 detik
+      POLLING_INTERVAL_MS: 1500,
       STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v3",
       STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v3",
       STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v3",
@@ -1235,7 +980,6 @@
 
     const isDemoMode = !CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes("PASTE_URL");
 
-    // Muat data instan dari cache lokal / default agar tidak ada layar "Memuat..."
     let candidatesData = loadInitialCandidates();
     let selectedCandidate = null;
     let voteChart = null;
@@ -1263,9 +1007,6 @@
       } catch (e) {}
     }
 
-    // =========================================================================
-    // NOTIFIKASI BERANIMASI TENGAH LAYAR
-    // =========================================================================
     function showCenterNotif(type, title, message, durationMs = 2000) {
       const backdrop = document.getElementById("centerNotifBackdrop");
       const iconRing = document.getElementById("notifIconRing");
@@ -1304,9 +1045,6 @@
       }
     }
 
-    // =========================================================================
-    // DEVICE ID & PENYIMPANAN LOKAL
-    // =========================================================================
     function getDeviceId() {
       let deviceId = localStorage.getItem(CONFIG.STORAGE_KEY_DEVICE);
       if (!deviceId) {
@@ -1342,9 +1080,6 @@
       localStorage.setItem(CONFIG.STORAGE_KEY_VOTED_IDS, JSON.stringify(uniqueIds));
     }
 
-    // =========================================================================
-    // RENDER DAFTAR PESERTA & GRAFIK (INSTANT)
-    // =========================================================================
     function renderCandidates() {
       const container = document.getElementById("candidateList");
       const votedIds = getVotedIds();
@@ -1357,7 +1092,7 @@
         .map(c => c.nama);
 
       if (votedNames.length > 0) {
-        banner.innerHTML = `🎶 Anda telah memilih <strong>${votedNames.length} peserta</strong> (${escapeHtml(votedNames.join(", "))}). Peserta lain yang belum terkunci masih bisa dipilih.`;
+        banner.innerHTML = `🎶 Pilihan Anda: <strong>${escapeHtml(votedNames.join(", "))}</strong>`;
         banner.classList.add("visible");
       } else {
         banner.classList.remove("visible");
@@ -1490,17 +1225,8 @@
       }).join("");
     }
 
-    // =========================================================================
-    // SINKRONISASI REAL-TIME CEPAT (BACKGROUND SYNC)
-    // =========================================================================
     async function fetchLiveVotes() {
-      if (isDemoMode) {
-        document.getElementById("syncStatus").textContent = "Mode Simulasi Lokal (Tempel URL Apps Script untuk koneksi online)";
-        return;
-      }
-
-      // Cegah request menumpuk & jangan timpa tampilan saat vote sedang dikirim
-      if (isFetching || isVoteInFlight) return;
+      if (isDemoMode || isFetching || isVoteInFlight) return;
       isFetching = true;
 
       try {
@@ -1519,27 +1245,20 @@
           renderCandidates();
           renderChartAndStandings();
           if (verifiedAdminPin) renderAdminList();
-
-          const now = new Date().toLocaleTimeString("id-ID");
-          document.getElementById("syncStatus").textContent = `Live terhubung • Diperbarui ${now}`;
         }
       } catch (err) {
-        document.getElementById("syncStatus").textContent = "Menjaga koneksi sinkronisasi...";
       } finally {
         isFetching = false;
       }
     }
 
-    // =========================================================================
-    // OPTIMISTIC VOTING (LANGSUNG RESPONSIF 0ms TANPA MENUNGGU SERVER)
-    // =========================================================================
     function openConfirmModal(candidateId) {
       if (getVotedIds().includes(candidateId)) return;
       selectedCandidate = candidatesData.find(c => c.id === candidateId);
       if (!selectedCandidate) return;
 
       document.getElementById("modalText").innerHTML =
-        `Berikan 1 suara untuk <strong>${escapeHtml(selectedCandidate.nama)}</strong>?<br><span style="font-size:0.8rem; color:#64748b;">Setelah dikirim, tombol peserta ini akan terkunci untuk perangkat Anda.</span>`;
+        `Berikan 1 suara untuk <strong>${escapeHtml(selectedCandidate.nama)}</strong>?`;
       document.getElementById("confirmModal").classList.add("active");
     }
 
@@ -1554,7 +1273,6 @@
       const targetName = selectedCandidate.nama;
       closeConfirmModal();
 
-      // 1. LANGSUNG UPDATE UI & KUNCI TOMBOL DALAM 0 MILIDETIK (OPTIMISTIC UI)
       const previousVotedIds = getVotedIds();
       const targetIdx = candidatesData.findIndex(c => c.id === targetId);
       if (targetIdx !== -1) {
@@ -1565,11 +1283,10 @@
 
       renderCandidates();
       renderChartAndStandings();
-      showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} langsung masuk ke grafik.`);
+      showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} telah masuk.`);
 
       if (isDemoMode) return;
 
-      // 2. KIRIM DATA KE GOOGLE APPS SCRIPT DI LATAR BELAKANG
       isVoteInFlight = true;
       try {
         const response = await fetch(CONFIG.SCRIPT_URL, {
@@ -1602,7 +1319,6 @@
           renderChartAndStandings();
           showCenterNotif("warning", "Sudah Terkunci", result.message);
         } else {
-          // Kembalikan jika ditolak server
           if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
             candidatesData[targetIdx].votes -= 1;
           }
@@ -1613,7 +1329,6 @@
           showCenterNotif("error", "Gagal Menyimpan", result.message || "Silakan coba lagi.");
         }
       } catch (error) {
-        // Kembalikan jika koneksi gagal total
         if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
           candidatesData[targetIdx].votes -= 1;
         }
@@ -1627,9 +1342,6 @@
       }
     });
 
-    // =========================================================================
-    // PANEL ADMIN
-    // =========================================================================
     function openAdminModal() {
       document.getElementById("adminModal").classList.add("active");
       if (verifiedAdminPin) {
@@ -1966,16 +1678,12 @@
         .replace(/'/g, "&#039;");
     }
 
-    // =========================================================================
-    // EKSEKUSI INSTAN SAAT HALAMAN DIBUKA (0ms RENDER)
-    // =========================================================================
     getDeviceId();
     renderCandidates();
     renderChartAndStandings();
     fetchLiveVotes();
     setInterval(fetchLiveVotes, CONFIG.POLLING_INTERVAL_MS);
 
-    // Langsung sinkronisasi begitu layar HP/tab browser kembali aktif
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) fetchLiveVotes();
     });
