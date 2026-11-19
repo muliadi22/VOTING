@@ -148,6 +148,13 @@
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+
+    .live-pill.closed-state {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #b91c1c;
     }
 
     .live-dot {
@@ -156,6 +163,11 @@
       background-color: var(--emerald);
       border-radius: 50%;
       animation: pulseRing 1.4s infinite;
+    }
+
+    .live-pill.closed-state .live-dot {
+      background-color: var(--danger);
+      animation: none;
     }
 
     @keyframes pulseRing {
@@ -302,6 +314,24 @@
       transform: scale(0.98);
       background: var(--sky-light);
     }
+
+    .closed-notice-banner {
+      background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+      border: 1.5px solid #fca5a5;
+      color: #991b1b;
+      padding: 14px 18px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: none;
+      line-height: 1.45;
+      box-shadow: 0 8px 22px rgba(239, 68, 68, 0.12);
+      animation: fadePopIn 0.35s ease-out both;
+    }
+
+    .closed-notice-banner.visible { display: block; }
 
     .status-banner {
       background: linear-gradient(135deg, #ecfdf5, #e0f2fe);
@@ -518,6 +548,12 @@
       transform: none;
     }
 
+    .vote-btn.closed-btn:disabled {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+    }
+
     @media (max-width: 480px) {
       .container { padding: 16px 10px 28px; }
       .card { padding: 14px 12px; border-radius: 16px; }
@@ -649,7 +685,7 @@
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 24px;
-      max-width: 320px;
+      max-width: 340px;
       width: 100%;
       padding: 24px 20px 20px;
       text-align: center;
@@ -757,6 +793,8 @@
     .btn-confirm { flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28); }
     .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; font-weight: 800; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.28); }
     .btn-unlock { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-weight: 800; padding: 9px 14px; border-radius: 10px; font-size: 0.78rem; box-shadow: 0 3px 10px rgba(2, 132, 199, 0.25); }
+    .btn-close-poll { background: linear-gradient(135deg, #f97316, #ea580c); color: #ffffff; font-weight: 800; padding: 9px 14px; border-radius: 10px; font-size: 0.78rem; box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25); }
+    .btn-reopen-poll { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; font-weight: 800; padding: 9px 14px; border-radius: 10px; font-size: 0.78rem; box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25); }
     .btn-edit-sm { background: #fef3c7; border: 1px solid #fcd34d; color: #b45309; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
     .btn-del-sm { background: #fee2e2; border: 1px solid #fca5a5; color: #dc2626; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
 
@@ -769,13 +807,15 @@
     .admin-add-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     @media (max-width: 520px) { .admin-add-inputs { grid-template-columns: 1fr; } }
 
-    .admin-candidate-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; max-height: 270px; overflow-y: auto; }
+    .admin-candidate-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; max-height: 250px; overflow-y: auto; }
     .admin-row-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .admin-row-info { min-width: 0; flex: 1; }
     .admin-row-info strong { display: block; font-size: 0.86rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .admin-row-info span { font-size: 0.74rem; color: var(--text-muted); }
     .admin-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
+    .polling-control-zone { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .polling-control-zone.is-closed { background: #ecfdf5; border-color: #a7f3d0; }
     .unlock-zone { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
     .danger-zone { background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 
@@ -845,9 +885,9 @@
 
   <nav class="navbar">
     <div class="nav-inner">
-      <div class="live-pill">
+      <div id="liveStatusPill" class="live-pill">
         <span class="live-dot"></span>
-        LIVE E-VOTING
+        <span id="liveStatusText">LIVE E-VOTING</span>
       </div>
       <button class="admin-btn" onclick="openAdminModal()">
         <span>⚙️</span> Menu Admin
@@ -876,7 +916,7 @@
         <path d="M666 40 L711 30 L711 37 L666 47 Z" fill="#10b981"/>
       </svg>
 
-      <div class="org-chip">Balai Kekarantinaan Kesehatan Kelas I Banjarmasin</div>
+      <div class="org-chip">🏛️ Balai Kekarantinaan Kesehatan Kelas I Banjarmasin</div>
 
       <div class="title-row">
         <svg class="title-note-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -892,6 +932,11 @@
     <div class="mobile-jump-bar">
       <a href="#sectionPeserta" class="jump-pill">🎵 Daftar Peserta</a>
       <a href="#sectionGrafik" class="jump-pill">📊 Grafik Live</a>
+    </div>
+
+    <div id="closedNoticeBanner" class="closed-notice-banner">
+      ⏰ <strong>Waktu Voting Sudah Selesai!</strong><br>
+      Polling telah ditutup oleh panitia. Terima kasih atas partisipasi Anda.
     </div>
 
     <div id="statusBanner" class="status-banner"></div>
@@ -949,7 +994,7 @@
       </div>
 
       <div id="adminLoginSection">
-        <p>Masukkan PIN Admin untuk mengelola peserta, membuka kunci, atau me-reset hasil voting.</p>
+        <p>Masukkan PIN Admin untuk mengelola peserta, menutup polling, membuka kunci, atau me-reset hasil voting.</p>
         <div class="form-group">
           <label for="adminPinInput">PIN Admin</label>
           <input type="password" id="adminPinInput" class="form-input" placeholder="Masukkan PIN Admin..." />
@@ -967,6 +1012,14 @@
         </div>
 
         <div id="adminCandidateList" class="admin-candidate-list"></div>
+
+        <div id="pollingControlZone" class="polling-control-zone">
+          <div>
+            <strong id="pollingControlTitle" style="font-size: 0.84rem; color: #c2410c; display: block;">Status Polling: Masih Dibuka</strong>
+            <span id="pollingControlDesc" style="font-size: 0.74rem; color: var(--text-body);">Tutup polling jika waktu pemilihan suara telah berakhir.</span>
+          </div>
+          <button class="btn btn-close-poll" id="togglePollingBtn" onclick="openAdminActionConfirm('toggle_polling')">Tutup Polling</button>
+        </div>
 
         <div class="unlock-zone">
           <div>
@@ -1031,6 +1084,7 @@
       STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v4",
       STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v4",
       STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v4",
+      STORAGE_KEY_CLOSED: "bkk_evoting_is_closed_v4",
       DEFAULT_CANDIDATES: [
         { id: "P01", nama: "Lingga Susanto", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
         { id: "P02", nama: "Pak Ded’So", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
@@ -1049,6 +1103,7 @@
     const isDemoMode = !CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes("PASTE_URL");
 
     let candidatesData = loadInitialCandidates();
+    let isPollingClosed = loadInitialClosedState();
     let selectedCandidate = null;
     let voteChart = null;
     let isFetching = false;
@@ -1066,11 +1121,13 @@
 
     function broadcastState(source = "local") {
       saveCandidatesCache(candidatesData);
+      saveClosedState(isPollingClosed);
       if (syncChannel) {
         try {
           syncChannel.postMessage({
             source: source,
             candidates: candidatesData,
+            isClosed: isPollingClosed,
             ts: Date.now()
           });
         } catch (e) {}
@@ -1081,10 +1138,22 @@
       syncChannel.onmessage = (event) => {
         const payload = event.data;
         if (!payload || !Array.isArray(payload.candidates)) return;
+        const wasClosed = isPollingClosed;
         candidatesData = payload.candidates;
+        if (typeof payload.isClosed === "boolean") {
+          isPollingClosed = payload.isClosed;
+        }
         saveCandidatesCache(candidatesData);
+        saveClosedState(isPollingClosed);
         renderAllViews(false);
-        if (verifiedAdminPin) renderAdminList();
+        if (verifiedAdminPin) {
+          renderAdminList();
+          updateAdminPollingControlUI();
+        }
+        if (!wasClosed && isPollingClosed) {
+          closeConfirmModal();
+          showCenterNotif("warning", "Waktu Voting Sudah Selesai", "Polling telah ditutup oleh panitia.", 2200);
+        }
       };
     }
 
@@ -1143,7 +1212,21 @@
       } catch (e) {}
     }
 
-    function showCenterNotif(type, title, message, durationMs = 1300) {
+    function loadInitialClosedState() {
+      try {
+        return localStorage.getItem(CONFIG.STORAGE_KEY_CLOSED) === "true";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function saveClosedState(closed) {
+      try {
+        localStorage.setItem(CONFIG.STORAGE_KEY_CLOSED, closed ? "true" : "false");
+      } catch (e) {}
+    }
+
+    function showCenterNotif(type, title, message, durationMs = 1500) {
       const backdrop = document.getElementById("centerNotifBackdrop");
       const iconRing = document.getElementById("notifIconRing");
       const titleEl = document.getElementById("notifTitle");
@@ -1224,7 +1307,48 @@
       } catch (e) {}
     }
 
+    function updatePollingStatusUI() {
+      const pill = document.getElementById("liveStatusPill");
+      const pillText = document.getElementById("liveStatusText");
+      const closedBanner = document.getElementById("closedNoticeBanner");
+
+      if (isPollingClosed) {
+        pill.classList.add("closed-state");
+        pillText.textContent = "VOTING DITUTUP";
+        closedBanner.classList.add("visible");
+      } else {
+        pill.classList.remove("closed-state");
+        pillText.textContent = "LIVE E-VOTING";
+        closedBanner.classList.remove("visible");
+      }
+    }
+
+    function updateAdminPollingControlUI() {
+      const zone = document.getElementById("pollingControlZone");
+      const titleEl = document.getElementById("pollingControlTitle");
+      const descEl = document.getElementById("pollingControlDesc");
+      const btn = document.getElementById("togglePollingBtn");
+
+      if (isPollingClosed) {
+        zone.classList.add("is-closed");
+        titleEl.style.color = "#047857";
+        titleEl.textContent = "Status Polling: Sudah Ditutup";
+        descEl.textContent = "Waktu voting telah selesai. Buka kembali jika ingin melanjutkan voting.";
+        btn.className = "btn btn-reopen-poll";
+        btn.textContent = "Buka Kembali Polling";
+      } else {
+        zone.classList.remove("is-closed");
+        titleEl.style.color = "#c2410c";
+        titleEl.textContent = "Status Polling: Masih Dibuka";
+        descEl.textContent = "Tutup polling jika waktu pemilihan suara telah berakhir.";
+        btn.className = "btn btn-close-poll";
+        btn.textContent = "Tutup Polling";
+      }
+    }
+
     function renderCandidates(animateEntrance = false) {
+      updatePollingStatusUI();
+
       const container = document.getElementById("candidateList");
       const votedIds = getVotedIds();
       const totalVotes = candidatesData.reduce((sum, item) => sum + item.votes, 0);
@@ -1250,10 +1374,21 @@
 
       container.innerHTML = candidatesData.map((item, idx) => {
         const isVoted = votedIds.includes(String(item.id));
+        const isDisabled = isPollingClosed || isVoted;
         const pct = formatPercent(item.votes, totalVotes);
         const delayMs = Math.min(idx * 42, 480);
         const animClass = animateEntrance ? "animate-enter" : "";
         const animStyle = animateEntrance ? `style="--enter-delay: ${delayMs}ms;"` : "";
+
+        let btnLabel = "Vote";
+        let btnExtraClass = "";
+        if (isPollingClosed) {
+          btnLabel = isVoted ? "Terkunci ✓" : "Ditutup 🔒";
+          btnExtraClass = isVoted ? "" : "closed-btn";
+        } else if (isVoted) {
+          btnLabel = "Terkunci ✓";
+        }
+
         return `
           <div class="candidate-item ${isVoted ? "voted-item" : ""} ${animClass}" ${animStyle}>
             <div class="candidate-left">
@@ -1268,11 +1403,11 @@
               </div>
             </div>
             <button
-              class="vote-btn"
+              class="vote-btn ${btnExtraClass}"
               onclick="openConfirmModal('${item.id}')"
-              ${isVoted ? "disabled" : ""}
+              ${isDisabled ? "disabled" : ""}
             >
-              ${isVoted ? "Terkunci ✓" : "Vote"}
+              ${btnLabel}
             </button>
           </div>
         `;
@@ -1416,17 +1551,29 @@
         if (pendingVoteCount === 0 && result.status === "success" && Array.isArray(result.candidates)) {
           const prevJson = JSON.stringify(candidatesData);
           const nextJson = JSON.stringify(result.candidates);
+          const wasClosed = isPollingClosed;
+          const nextClosed = Boolean(result.isClosed);
 
           candidatesData = result.candidates;
+          isPollingClosed = nextClosed;
           saveCandidatesCache(candidatesData);
+          saveClosedState(isPollingClosed);
 
           if (Array.isArray(result.votedIds)) {
             saveVotedIds(result.votedIds);
           }
 
-          if (prevJson !== nextJson) {
+          if (prevJson !== nextJson || wasClosed !== nextClosed) {
             renderAllViews(false);
-            if (verifiedAdminPin) renderAdminList();
+            if (verifiedAdminPin) {
+              renderAdminList();
+              updateAdminPollingControlUI();
+            }
+          }
+
+          if (!wasClosed && nextClosed) {
+            closeConfirmModal();
+            showCenterNotif("warning", "Waktu Voting Sudah Selesai", "Polling telah ditutup oleh panitia. Terima kasih atas partisipasi Anda.", 2400);
           }
         }
       } catch (err) {
@@ -1437,6 +1584,10 @@
     }
 
     function openConfirmModal(candidateId) {
+      if (isPollingClosed) {
+        showCenterNotif("warning", "Waktu Voting Sudah Selesai", "Polling telah ditutup oleh panitia.", 2000);
+        return;
+      }
       if (getVotedIds().includes(String(candidateId))) return;
       selectedCandidate = candidatesData.find(c => String(c.id) === String(candidateId));
       if (!selectedCandidate) return;
@@ -1453,6 +1604,12 @@
 
     document.getElementById("confirmVoteBtn").addEventListener("click", () => {
       if (!selectedCandidate) return;
+      if (isPollingClosed) {
+        closeConfirmModal();
+        showCenterNotif("warning", "Waktu Voting Sudah Selesai", "Polling telah ditutup oleh panitia.", 2000);
+        return;
+      }
+
       const targetId = String(selectedCandidate.id);
       const targetName = selectedCandidate.nama;
       closeConfirmModal();
@@ -1486,12 +1643,27 @@
           if (result.status === "success") {
             if (Array.isArray(result.candidates)) {
               candidatesData = result.candidates;
-              broadcastState("server_vote");
             }
+            if (typeof result.isClosed === "boolean") {
+              isPollingClosed = result.isClosed;
+            }
+            broadcastState("server_vote");
             if (Array.isArray(result.votedIds)) {
               saveVotedIds(result.votedIds);
             }
             renderAllViews(false);
+          } else if (result.status === "closed") {
+            if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
+              candidatesData[targetIdx].votes -= 1;
+            }
+            saveVotedIds(previousVotedIds);
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+            }
+            isPollingClosed = true;
+            broadcastState("closed");
+            renderAllViews(false);
+            showCenterNotif("warning", "Waktu Voting Sudah Selesai", result.message || "Polling telah ditutup oleh panitia.", 2400);
           } else if (result.status === "duplicate") {
             if (Array.isArray(result.candidates)) {
               candidatesData = result.candidates;
@@ -1531,6 +1703,7 @@
         document.getElementById("adminLoginSection").style.display = "none";
         document.getElementById("adminDashboardSection").style.display = "block";
         renderAdminList();
+        updateAdminPollingControlUI();
       } else {
         document.getElementById("adminLoginSection").style.display = "block";
         document.getElementById("adminDashboardSection").style.display = "none";
@@ -1567,8 +1740,12 @@
           verifiedAdminPin = pin;
           if (result.candidates) {
             candidatesData = result.candidates;
-            broadcastState("admin_verify");
           }
+          if (typeof result.isClosed === "boolean") {
+            isPollingClosed = result.isClosed;
+          }
+          broadcastState("admin_verify");
+          renderAllViews(false);
           openAdminModal();
           showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1300);
         } else {
@@ -1712,7 +1889,17 @@
       const textEl = document.getElementById("adminConfirmText");
       const execBtn = document.getElementById("adminConfirmExecBtn");
 
-      if (type === "delete") {
+      if (type === "toggle_polling") {
+        if (!isPollingClosed) {
+          titleEl.textContent = "Tutup Polling Sekarang?";
+          textEl.innerHTML = `Setelah ditutup, seluruh tombol <strong>Vote</strong> akan dinonaktifkan dan sistem menampilkan pemberitahuan <strong>"Waktu Voting Sudah Selesai"</strong>.`;
+          execBtn.style.background = "#ea580c";
+        } else {
+          titleEl.textContent = "Buka Kembali Polling?";
+          textEl.innerHTML = `Peserta yang belum memilih akan dapat kembali memberikan suara.`;
+          execBtn.style.background = "#059669";
+        }
+      } else if (type === "delete") {
         const target = candidatesData.find(c => String(c.id) === String(id));
         if (!target) return;
         titleEl.textContent = "Hapus Peserta?";
@@ -1742,7 +1929,45 @@
       closeAdminConfirmModal();
       lastMutationAt = Date.now();
 
-      if (type === "delete") {
+      if (type === "toggle_polling") {
+        const nextClosed = !isPollingClosed;
+        isPollingClosed = nextClosed;
+        updateAdminPollingControlUI();
+        renderAllViews(false);
+        broadcastState("admin_toggle_polling");
+
+        if (nextClosed) {
+          closeAdminModal();
+          showCenterNotif("warning", "Waktu Voting Sudah Selesai", "Polling telah ditutup oleh admin. Seluruh tombol vote kini dinonaktifkan.", 2400);
+        } else {
+          showCenterNotif("success", "Polling Dibuka Kembali", "Peserta dapat kembali melakukan voting.", 1600);
+        }
+
+        if (isDemoMode) return;
+
+        try {
+          const res = await fetch(CONFIG.SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "admin_toggle_polling",
+              pin: verifiedAdminPin,
+              isClosed: nextClosed
+            })
+          });
+          const result = await res.json();
+          if (result.status === "success") {
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+            }
+            if (typeof result.isClosed === "boolean") {
+              isPollingClosed = result.isClosed;
+            }
+            broadcastState("admin_toggle_polling_sync");
+            updateAdminPollingControlUI();
+            renderAllViews(false);
+          }
+        } catch (e) {}
+      } else if (type === "delete") {
         candidatesData = candidatesData.filter(c => String(c.id) !== String(id));
         renderAdminList();
         renderAllViews(false);
