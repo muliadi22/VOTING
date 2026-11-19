@@ -93,7 +93,7 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(203, 213, 225, 0.7);
@@ -130,7 +130,7 @@
       height: 8px;
       background-color: var(--emerald);
       border-radius: 50%;
-      animation: pulseRing 1.6s infinite;
+      animation: pulseRing 1.4s infinite;
     }
 
     @keyframes pulseRing {
@@ -151,7 +151,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: all 0.22s ease;
+      transition: all 0.2s ease;
       box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
     }
 
@@ -159,7 +159,6 @@
       background: linear-gradient(135deg, #f59e0b, #d97706);
       color: #ffffff;
       border-color: #d97706;
-      transform: translateY(-1px);
     }
 
     /* Main Container */
@@ -173,13 +172,12 @@
       flex: 1;
     }
 
-    /* Hero Header dengan Ornamen Garis Paranada & Not Balok */
+    /* Hero Header */
     header {
       text-align: center;
       margin-bottom: 22px;
       position: relative;
       padding: 12px 8px 6px;
-      animation: fadeSlideDown 0.6s ease-out;
     }
 
     .header-stave-svg {
@@ -193,11 +191,6 @@
       pointer-events: none;
       z-index: -1;
       opacity: 0.38;
-    }
-
-    @keyframes fadeSlideDown {
-      from { opacity: 0; transform: translateY(-12px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .org-chip {
@@ -251,6 +244,7 @@
       line-height: 1.2;
       background: linear-gradient(135deg, #0284c7 0%, #0d9488 52%, #f59e0b 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -260,8 +254,8 @@
       max-width: 620px;
       margin: 0 auto;
       line-height: 1.55;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.65);
+      padding: 6px 14px;
       border-radius: 12px;
     }
 
@@ -290,7 +284,6 @@
       font-size: 0.82rem;
       font-weight: 800;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
-      transition: all 0.2s;
     }
 
     .jump-pill:active {
@@ -316,7 +309,6 @@
 
     .status-banner.visible {
       display: block;
-      animation: fadeSlideDown 0.35s ease;
     }
 
     /* Grid Layout */
@@ -398,14 +390,13 @@
       width: 100%;
       min-width: 0;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
-      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
     }
 
     .candidate-item:hover {
       border-color: #7dd3fc;
       background: var(--surface-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.09);
+      transform: translateY(-1px);
     }
 
     .candidate-item.voted-item {
@@ -471,7 +462,7 @@
       font-weight: 800;
     }
 
-    /* Tombol Vote Ceria & Kontras */
+    /* Tombol Vote Instan */
     .vote-btn {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: #ffffff;
@@ -482,7 +473,7 @@
       font-size: 0.8rem;
       letter-spacing: 0.2px;
       cursor: pointer;
-      transition: all 0.22s ease;
+      transition: transform 0.12s ease, box-shadow 0.15s ease;
       white-space: nowrap;
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
@@ -491,11 +482,10 @@
     .vote-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, #059669 0%, #047857 100%);
       transform: translateY(-1px);
-      box-shadow: 0 7px 18px rgba(16, 185, 129, 0.38);
     }
 
     .vote-btn:active:not(:disabled) {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .vote-btn:disabled {
@@ -507,49 +497,17 @@
       transform: none;
     }
 
-    .vote-btn.submitting:disabled {
-      background: #e2e8f0;
-      border-color: transparent;
-      color: var(--text-muted);
-    }
-
     /* Penyesuaian Khusus Layar HP Kecil */
     @media (max-width: 480px) {
-      .container {
-        padding: 16px 10px 28px;
-      }
-      .card {
-        padding: 14px 12px;
-        border-radius: 16px;
-      }
-      .candidate-item {
-        padding: 10px 10px;
-        gap: 8px;
-      }
-      .candidate-left {
-        gap: 8px;
-      }
-      .avatar-num {
-        width: 31px;
-        height: 31px;
-        font-size: 0.78rem;
-      }
-      .candidate-info h3 {
-        font-size: 0.89rem;
-      }
-      .candidate-meta {
-        font-size: 0.71rem;
-        gap: 4px;
-      }
-      .vote-btn {
-        padding: 8px 12px;
-        font-size: 0.76rem;
-        border-radius: 9px;
-      }
-      .title-note-icon {
-        width: 24px;
-        height: 24px;
-      }
+      .container { padding: 16px 10px 28px; }
+      .card { padding: 14px 12px; border-radius: 16px; }
+      .candidate-item { padding: 10px 10px; gap: 8px; }
+      .candidate-left { gap: 8px; }
+      .avatar-num { width: 31px; height: 31px; font-size: 0.78rem; }
+      .candidate-info h3 { font-size: 0.89rem; }
+      .candidate-meta { font-size: 0.71rem; gap: 4px; }
+      .vote-btn { padding: 8px 12px; font-size: 0.76rem; border-radius: 9px; }
+      .title-note-icon { width: 24px; height: 24px; }
     }
 
     /* Grafik & Klasemen */
@@ -644,7 +602,7 @@
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, #0ea5e9, #10b981);
-      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: width 0.25s ease-out;
     }
 
     .rank-1 .progress-fill {
@@ -659,14 +617,14 @@
     }
 
     /* =========================================================================
-       NOTIFIKASI BERANIMASI DI TENGAH LAYAR (BRIGHT CENTER TOAST)
+       NOTIFIKASI BERANIMASI DI TENGAH LAYAR (INSTANT POP-IN)
        ========================================================================= */
     .center-notif-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.42);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      background: rgba(15, 23, 42, 0.38);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -674,7 +632,7 @@
       padding: 20px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.18s ease;
     }
 
     .center-notif-backdrop.show {
@@ -686,14 +644,14 @@
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 24px;
-      max-width: 330px;
+      max-width: 320px;
       width: 100%;
-      padding: 26px 20px 22px;
+      padding: 24px 20px 20px;
       text-align: center;
       box-shadow: 0 24px 55px rgba(15, 23, 42, 0.22);
-      transform: scale(0.75) translateY(16px);
+      transform: scale(0.8) translateY(12px);
       opacity: 0;
-      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.28s ease;
+      transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
       position: relative;
       overflow: hidden;
     }
@@ -704,14 +662,14 @@
     }
 
     .notif-icon-ring {
-      width: 62px;
-      height: 62px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      margin: 0 auto 14px;
+      margin: 0 auto 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
     }
 
@@ -719,44 +677,32 @@
       background: #d1fae5;
       border: 2px solid #10b981;
       color: #059669;
-      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.25);
-      animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .notif-icon-ring.warning {
       background: #fef3c7;
       border: 2px solid #f59e0b;
       color: #d97706;
-      box-shadow: 0 8px 22px rgba(245, 158, 11, 0.25);
-      animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .notif-icon-ring.error {
       background: #fee2e2;
       border: 2px solid #ef4444;
       color: #dc2626;
-      box-shadow: 0 8px 22px rgba(239, 68, 68, 0.25);
-      animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes iconPop {
-      0% { transform: scale(0.4) rotate(-15deg); }
-      70% { transform: scale(1.12) rotate(4deg); }
-      100% { transform: scale(1) rotate(0deg); }
     }
 
     .center-notif-title {
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .center-notif-msg {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--text-body);
       line-height: 1.45;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .notif-timer-bar {
@@ -784,9 +730,9 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.48);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -794,7 +740,7 @@
       z-index: 80;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.16s ease;
     }
 
     .modal-backdrop.active {
@@ -808,17 +754,17 @@
       border-radius: 22px;
       max-width: 410px;
       width: 100%;
-      padding: 24px 20px;
+      padding: 22px 20px;
       text-align: center;
       max-height: 88vh;
       overflow-y: auto;
       box-shadow: 0 25px 60px rgba(15, 23, 42, 0.22);
-      transform: scale(0.92) translateY(12px);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: scale(0.94);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .modal-backdrop.active .modal-box {
-      transform: scale(1) translateY(0);
+      transform: scale(1);
     }
 
     .modal-box.admin-modal {
@@ -827,7 +773,7 @@
     }
 
     .modal-box h3 {
-      font-size: 1.14rem;
+      font-size: 1.12rem;
       font-weight: 800;
       margin-bottom: 8px;
       color: var(--text);
@@ -852,7 +798,7 @@
       font-size: 0.84rem;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.12s ease;
     }
 
     .btn:active:not(:disabled) {
@@ -926,7 +872,6 @@
       border-radius: 12px;
       font-size: 0.86rem;
       outline: none;
-      transition: all 0.2s;
     }
 
     .form-input:focus {
@@ -953,9 +898,7 @@
     }
 
     @media (max-width: 520px) {
-      .admin-add-inputs {
-        grid-template-columns: 1fr;
-      }
+      .admin-add-inputs { grid-template-columns: 1fr; }
     }
 
     .admin-candidate-list {
@@ -1033,6 +976,7 @@
       background: linear-gradient(90deg, #92400e 0%, #f59e0b 50%, #92400e 100%);
       background-size: 200% auto;
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: shimmer 3.5s linear infinite;
     }
@@ -1048,7 +992,6 @@
 
   <!-- Layer Dekorasi Not Balok Melayang -->
   <div class="music-notes-layer" aria-hidden="true">
-    <!-- Not Balok Ganda (Beamed Eighth Notes) -->
     <svg class="floating-note note-1" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
     </svg>
@@ -1089,13 +1032,11 @@
     <!-- Hero Header dengan Garis Paranada & Not Balok -->
     <header>
       <svg class="header-stave-svg" viewBox="0 0 800 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- 5 Garis Paranada (Musical Stave) -->
         <path d="M10 35 Q 200 15, 400 35 T 790 35" stroke="#38bdf8" stroke-width="1.5"/>
         <path d="M10 50 Q 200 30, 400 50 T 790 50" stroke="#38bdf8" stroke-width="1.5"/>
         <path d="M10 65 Q 200 45, 400 65 T 790 65" stroke="#38bdf8" stroke-width="1.5"/>
         <path d="M10 80 Q 200 60, 400 80 T 790 80" stroke="#38bdf8" stroke-width="1.5"/>
         <path d="M10 95 Q 200 75, 400 95 T 790 95" stroke="#38bdf8" stroke-width="1.5"/>
-        <!-- Not Balok di atas Garis Paranada -->
         <ellipse cx="95" cy="72" rx="7" ry="5" transform="rotate(-20 95 72)" fill="#f59e0b"/>
         <line x1="101" y1="70" x2="101" y2="34" stroke="#f59e0b" stroke-width="2.5"/>
         <ellipse cx="135" cy="64" rx="7" ry="5" transform="rotate(-20 135 64)" fill="#f59e0b"/>
@@ -1109,7 +1050,7 @@
         <path d="M666 40 L711 30 L711 37 L666 47 Z" fill="#10b981"/>
       </svg>
 
-      <div class="org-chip">Balai Kekarantinaan Kesehatan Kelas I Banjarmasin</div>
+      <div class="org-chip">🏛️ Balai Kekarantinaan Kesehatan Kelas I Banjarmasin</div>
 
       <div class="title-row">
         <svg class="title-note-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1122,7 +1063,7 @@
       </div>
 
       <p class="subtitle">
-        Dukung penyanyi favorit Anda!<strong></strong>.
+        Dukung penyanyi favorit Anda! Pilih peserta jagoan Anda (setiap peserta maksimal <strong>1 suara</strong> per perangkat).
       </p>
     </header>
 
@@ -1141,11 +1082,9 @@
       <section id="sectionPeserta" class="card">
         <div class="card-header">
           <h2 class="card-title">🎵 Daftar Peserta</h2>
-          <span id="participantCountBadge" class="pill-counter">0 Peserta</span>
+          <span id="participantCountBadge" class="pill-counter">11 Peserta</span>
         </div>
-        <div id="candidateList" class="candidate-list">
-          <p style="color: var(--text-muted); text-align: center; padding: 24px;">Memuat daftar peserta...</p>
-        </div>
+        <div id="candidateList" class="candidate-list"></div>
       </section>
 
       <!-- Kolom Grafik Real-Time -->
@@ -1161,7 +1100,7 @@
         <div class="standings-header">🏆 Klasemen Sementara (Transparan)</div>
         <div id="standingsList" class="standings-list"></div>
 
-        <p class="chart-note" id="syncStatus">Menyinkronkan data secara otomatis setiap 5 detik...</p>
+        <p class="chart-note" id="syncStatus">Sinkronisasi real-time aktif</p>
       </section>
     </div>
   </div>
@@ -1197,7 +1136,6 @@
         <button class="btn btn-cancel" style="flex: none; padding: 6px 12px;" onclick="closeAdminModal()">Tutup ✕</button>
       </div>
 
-      <!-- Form Login PIN -->
       <div id="adminLoginSection">
         <p>Masukkan PIN Admin untuk menambah, mengubah, menghapus peserta, atau me-reset hasil voting.</p>
         <div class="form-group">
@@ -1207,7 +1145,6 @@
         <button class="btn btn-gold" style="width: 100%;" id="adminLoginBtn" onclick="verifyAdminLogin()">Masuk ke Panel Admin</button>
       </div>
 
-      <!-- Dashboard Kelola Peserta -->
       <div id="adminDashboardSection" style="display: none;">
         <p style="margin-bottom: 12px;">Perubahan langsung tersimpan ke database dan memperbarui tampilan semua penonton secara otomatis.</p>
 
@@ -1272,17 +1209,16 @@
 
   <script>
     // =========================================================================
-    // KONFIGURASI UTAMA
+    // KONFIGURASI UTAMA (TEMPEL URL WEB APP APPS SCRIPT ANDA DI BAWAH INI)
     // =========================================================================
     const CONFIG = {
-      // Tempel URL Web App Google Apps Script Anda di bawah ini:
       SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwrTyY8jCRrHgnz1Th5VRhvgJrRoGjDKfkF_fo9_oUndhMIF4IWDQ9iBbcl772ffPCnbQ/exec",
       DEMO_ADMIN_PIN: "BKK2026",
-      POLLING_INTERVAL_MS: 5000,
+      POLLING_INTERVAL_MS: 1500, // Sinkronisasi cepat setiap 1,5 detik
       STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v3",
       STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v3",
-      // Daftar 11 Peserta Lomba Bernyanyi
-      FALLBACK_CANDIDATES: [
+      STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v3",
+      DEFAULT_CANDIDATES: [
         { id: "P01", nama: "Lingga Susanto", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
         { id: "P02", nama: "Pak Ded’So", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
         { id: "P03", nama: "Tiwi’Tutiy & Friend’s", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
@@ -1297,21 +1233,40 @@
       ]
     };
 
-    let candidatesData = [];
+    const isDemoMode = !CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes("PASTE_URL");
+
+    // Muat data instan dari cache lokal / default agar tidak ada layar "Memuat..."
+    let candidatesData = loadInitialCandidates();
     let selectedCandidate = null;
     let voteChart = null;
-    let isSubmitting = false;
+    let isFetching = false;
+    let isVoteInFlight = false;
     let verifiedAdminPin = "";
     let notifTimeout = null;
     let editingCandidateId = null;
     let pendingAdminAction = null;
 
-    const isDemoMode = !CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes("PASTE_URL");
+    function loadInitialCandidates() {
+      try {
+        const cached = localStorage.getItem(CONFIG.STORAGE_KEY_CACHE);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(CONFIG.DEFAULT_CANDIDATES));
+    }
+
+    function saveCandidatesCache(data) {
+      try {
+        localStorage.setItem(CONFIG.STORAGE_KEY_CACHE, JSON.stringify(data));
+      } catch (e) {}
+    }
 
     // =========================================================================
     // NOTIFIKASI BERANIMASI TENGAH LAYAR
     // =========================================================================
-    function showCenterNotif(type, title, message, durationMs = 2600) {
+    function showCenterNotif(type, title, message, durationMs = 2000) {
       const backdrop = document.getElementById("centerNotifBackdrop");
       const iconRing = document.getElementById("notifIconRing");
       const titleEl = document.getElementById("notifTitle");
@@ -1388,7 +1343,7 @@
     }
 
     // =========================================================================
-    // RENDER DAFTAR PESERTA & GRAFIK
+    // RENDER DAFTAR PESERTA & GRAFIK (INSTANT)
     // =========================================================================
     function renderCandidates() {
       const container = document.getElementById("candidateList");
@@ -1402,7 +1357,7 @@
         .map(c => c.nama);
 
       if (votedNames.length > 0) {
-        banner.innerHTML = `🎶 Anda telah memilih <strong>${votedNames.length} peserta</strong> (${escapeHtml(votedNames.join(", "))}). `;
+        banner.innerHTML = `🎶 Anda telah memilih <strong>${votedNames.length} peserta</strong> (${escapeHtml(votedNames.join(", "))}). Peserta lain yang belum terkunci masih bisa dipilih.`;
         banner.classList.add("visible");
       } else {
         banner.classList.remove("visible");
@@ -1429,9 +1384,9 @@
               </div>
             </div>
             <button
-              class="vote-btn ${isSubmitting ? "submitting" : ""}"
+              class="vote-btn"
               onclick="openConfirmModal('${item.id}')"
-              ${isVoted || isSubmitting ? "disabled" : ""}
+              ${isVoted ? "disabled" : ""}
             >
               ${isVoted ? "Terkunci ✓" : "Vote"}
             </button>
@@ -1475,7 +1430,7 @@
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 450 },
+            animation: { duration: 250 },
             plugins: {
               legend: { display: false },
               tooltip: {
@@ -1536,44 +1491,50 @@
     }
 
     // =========================================================================
-    // SINKRONISASI REAL-TIME & VOTING
+    // SINKRONISASI REAL-TIME CEPAT (BACKGROUND SYNC)
     // =========================================================================
     async function fetchLiveVotes() {
       if (isDemoMode) {
-        if (candidatesData.length === 0) {
-          candidatesData = JSON.parse(JSON.stringify(CONFIG.FALLBACK_CANDIDATES));
-        }
-        document.getElementById("syncStatus").textContent = "Mode Simulasi Lokal (Tempel URL Apps Script untuk sinkronisasi online)";
-        renderCandidates();
-        renderChartAndStandings();
-        if (verifiedAdminPin) renderAdminList();
+        document.getElementById("syncStatus").textContent = "Mode Simulasi Lokal (Tempel URL Apps Script untuk koneksi online)";
         return;
       }
 
+      // Cegah request menumpuk & jangan timpa tampilan saat vote sedang dikirim
+      if (isFetching || isVoteInFlight) return;
+      isFetching = true;
+
       try {
-        const url = `${CONFIG.SCRIPT_URL}?deviceId=${encodeURIComponent(getDeviceId())}`;
+        const url = `${CONFIG.SCRIPT_URL}?deviceId=${encodeURIComponent(getDeviceId())}&_t=${Date.now()}`;
         const response = await fetch(url);
         const result = await response.json();
 
-        if (result.status === "success" && Array.isArray(result.candidates)) {
+        if (!isVoteInFlight && result.status === "success" && Array.isArray(result.candidates)) {
           candidatesData = result.candidates;
+          saveCandidatesCache(candidatesData);
+
           if (Array.isArray(result.votedIds)) {
             saveVotedIds([...getVotedIds(), ...result.votedIds]);
           }
+
           renderCandidates();
           renderChartAndStandings();
           if (verifiedAdminPin) renderAdminList();
 
           const now = new Date().toLocaleTimeString("id-ID");
-          document.getElementById("syncStatus").textContent = `Terakhir diperbarui: ${now} • Auto-sync aktif`;
+          document.getElementById("syncStatus").textContent = `Live terhubung • Diperbarui ${now}`;
         }
       } catch (err) {
-        document.getElementById("syncStatus").textContent = "Menunggu koneksi jaringan untuk sinkronisasi...";
+        document.getElementById("syncStatus").textContent = "Menjaga koneksi sinkronisasi...";
+      } finally {
+        isFetching = false;
       }
     }
 
+    // =========================================================================
+    // OPTIMISTIC VOTING (LANGSUNG RESPONSIF 0ms TANPA MENUNGGU SERVER)
+    // =========================================================================
     function openConfirmModal(candidateId) {
-      if (getVotedIds().includes(candidateId) || isSubmitting) return;
+      if (getVotedIds().includes(candidateId)) return;
       selectedCandidate = candidatesData.find(c => c.id === candidateId);
       if (!selectedCandidate) return;
 
@@ -1588,25 +1549,28 @@
     }
 
     document.getElementById("confirmVoteBtn").addEventListener("click", async () => {
-      if (!selectedCandidate || isSubmitting) return;
+      if (!selectedCandidate) return;
       const targetId = selectedCandidate.id;
       const targetName = selectedCandidate.nama;
       closeConfirmModal();
 
-      isSubmitting = true;
-      renderCandidates();
-
-      if (isDemoMode) {
-        const idx = candidatesData.findIndex(c => c.id === targetId);
-        if (idx !== -1) candidatesData[idx].votes += 1;
-        saveVotedIds([...getVotedIds(), targetId]);
-        isSubmitting = false;
-        renderCandidates();
-        renderChartAndStandings();
-        showCenterNotif("success", "Suara Tercatat!", `Terima kasih, Anda telah mendukung ${targetName}.`);
-        return;
+      // 1. LANGSUNG UPDATE UI & KUNCI TOMBOL DALAM 0 MILIDETIK (OPTIMISTIC UI)
+      const previousVotedIds = getVotedIds();
+      const targetIdx = candidatesData.findIndex(c => c.id === targetId);
+      if (targetIdx !== -1) {
+        candidatesData[targetIdx].votes += 1;
       }
+      saveVotedIds([...previousVotedIds, targetId]);
+      saveCandidatesCache(candidatesData);
 
+      renderCandidates();
+      renderChartAndStandings();
+      showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} langsung masuk ke grafik.`);
+
+      if (isDemoMode) return;
+
+      // 2. KIRIM DATA KE GOOGLE APPS SCRIPT DI LATAR BELAKANG
+      isVoteInFlight = true;
       try {
         const response = await fetch(CONFIG.SCRIPT_URL, {
           method: "POST",
@@ -1620,22 +1584,46 @@
         const result = await response.json();
 
         if (result.status === "success") {
-          saveVotedIds([...getVotedIds(), targetId, ...(result.votedIds || [])]);
-          if (result.candidates) candidatesData = result.candidates;
-          showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} berhasil masuk ke grafik live.`);
+          if (Array.isArray(result.candidates)) {
+            candidatesData = result.candidates;
+            saveCandidatesCache(candidatesData);
+          }
+          if (Array.isArray(result.votedIds)) {
+            saveVotedIds([...getVotedIds(), ...result.votedIds]);
+          }
+          renderCandidates();
+          renderChartAndStandings();
         } else if (result.status === "duplicate") {
-          saveVotedIds([...getVotedIds(), targetId, ...(result.votedIds || [])]);
-          if (result.candidates) candidatesData = result.candidates;
+          if (Array.isArray(result.candidates)) {
+            candidatesData = result.candidates;
+            saveCandidatesCache(candidatesData);
+          }
+          renderCandidates();
+          renderChartAndStandings();
           showCenterNotif("warning", "Sudah Terkunci", result.message);
         } else {
-          showCenterNotif("error", "Gagal Memilih", result.message || "Silakan coba beberapa saat lagi.");
+          // Kembalikan jika ditolak server
+          if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
+            candidatesData[targetIdx].votes -= 1;
+          }
+          saveVotedIds(previousVotedIds);
+          saveCandidatesCache(candidatesData);
+          renderCandidates();
+          renderChartAndStandings();
+          showCenterNotif("error", "Gagal Menyimpan", result.message || "Silakan coba lagi.");
         }
       } catch (error) {
-        showCenterNotif("error", "Koneksi Terputus", "Periksa jaringan internet Anda lalu coba kembali.");
-      } finally {
-        isSubmitting = false;
+        // Kembalikan jika koneksi gagal total
+        if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
+          candidatesData[targetIdx].votes -= 1;
+        }
+        saveVotedIds(previousVotedIds);
+        saveCandidatesCache(candidatesData);
         renderCandidates();
         renderChartAndStandings();
+        showCenterNotif("error", "Koneksi Gagal", "Periksa jaringan internet Anda lalu coba kembali.");
+      } finally {
+        isVoteInFlight = false;
       }
     });
 
@@ -1661,7 +1649,7 @@
     async function verifyAdminLogin() {
       const pin = document.getElementById("adminPinInput").value.trim();
       if (!pin) {
-        showCenterNotif("warning", "PIN Kosong", "Silakan masukkan PIN Admin terlebih dahulu.", 2000);
+        showCenterNotif("warning", "PIN Kosong", "Silakan masukkan PIN Admin terlebih dahulu.", 1800);
         return;
       }
 
@@ -1675,9 +1663,9 @@
         if (pin === CONFIG.DEMO_ADMIN_PIN) {
           verifiedAdminPin = pin;
           openAdminModal();
-          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1800);
+          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1500);
         } else {
-          showCenterNotif("error", "PIN Salah", "PIN Admin yang Anda masukkan tidak sesuai.", 2200);
+          showCenterNotif("error", "PIN Salah", "PIN Admin yang Anda masukkan tidak sesuai.", 2000);
         }
         return;
       }
@@ -1690,14 +1678,17 @@
         const result = await res.json();
         if (result.status === "success") {
           verifiedAdminPin = pin;
-          if (result.candidates) candidatesData = result.candidates;
+          if (result.candidates) {
+            candidatesData = result.candidates;
+            saveCandidatesCache(candidatesData);
+          }
           openAdminModal();
-          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1800);
+          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1500);
         } else {
-          showCenterNotif("error", "PIN Salah", result.message || "PIN Admin tidak valid.", 2200);
+          showCenterNotif("error", "PIN Salah", result.message || "PIN Admin tidak valid.", 2000);
         }
       } catch (e) {
-        showCenterNotif("error", "Gagal Terhubung", "Tidak dapat menjangkau server Apps Script.", 2400);
+        showCenterNotif("error", "Gagal Terhubung", "Tidak dapat menjangkau server Apps Script.", 2200);
       } finally {
         btn.disabled = false;
         btn.textContent = "Masuk ke Panel Admin";
@@ -1732,7 +1723,7 @@
       const keterangan = noteInput.value.trim() || "Peserta Lomba Bernyanyi";
 
       if (!nama) {
-        showCenterNotif("warning", "Nama Kosong", "Isi nama peserta baru terlebih dahulu.", 2000);
+        showCenterNotif("warning", "Nama Kosong", "Isi nama peserta baru terlebih dahulu.", 1800);
         return;
       }
 
@@ -1747,6 +1738,7 @@
           keterangan: keterangan,
           votes: 0
         });
+        saveCandidatesCache(candidatesData);
         nameInput.value = "";
         noteInput.value = "";
         btn.disabled = false;
@@ -1771,6 +1763,7 @@
         const result = await res.json();
         if (result.status === "success") {
           candidatesData = result.candidates;
+          saveCandidatesCache(candidatesData);
           nameInput.value = "";
           noteInput.value = "";
           renderAdminList();
@@ -1808,7 +1801,7 @@
       const newNote = document.getElementById("editCandidateNoteInput").value.trim() || "Peserta Lomba Bernyanyi";
 
       if (!newName) {
-        showCenterNotif("warning", "Nama Wajib Diisi", "Nama peserta tidak boleh kosong.", 2000);
+        showCenterNotif("warning", "Nama Wajib Diisi", "Nama peserta tidak boleh kosong.", 1800);
         return;
       }
 
@@ -1822,6 +1815,7 @@
           target.nama = newName;
           target.keterangan = newNote;
         }
+        saveCandidatesCache(candidatesData);
         btn.disabled = false;
         btn.textContent = "Simpan Perubahan";
         closeEditModal();
@@ -1846,6 +1840,7 @@
         const result = await res.json();
         if (result.status === "success") {
           candidatesData = result.candidates;
+          saveCandidatesCache(candidatesData);
           closeEditModal();
           renderAdminList();
           renderCandidates();
@@ -1893,6 +1888,7 @@
       if (type === "delete") {
         if (isDemoMode) {
           candidatesData = candidatesData.filter(c => c.id !== id);
+          saveCandidatesCache(candidatesData);
           renderAdminList();
           renderCandidates();
           renderChartAndStandings();
@@ -1912,6 +1908,7 @@
           const result = await res.json();
           if (result.status === "success") {
             candidatesData = result.candidates;
+            saveCandidatesCache(candidatesData);
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
@@ -1927,6 +1924,7 @@
 
         if (isDemoMode) {
           candidatesData.forEach(c => c.votes = 0);
+          saveCandidatesCache(candidatesData);
           renderAdminList();
           renderCandidates();
           renderChartAndStandings();
@@ -1945,6 +1943,7 @@
           const result = await res.json();
           if (result.status === "success") {
             candidatesData = result.candidates;
+            saveCandidatesCache(candidatesData);
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
@@ -1967,10 +1966,19 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Inisialisasi Awal
+    // =========================================================================
+    // EKSEKUSI INSTAN SAAT HALAMAN DIBUKA (0ms RENDER)
+    // =========================================================================
     getDeviceId();
+    renderCandidates();
+    renderChartAndStandings();
     fetchLiveVotes();
     setInterval(fetchLiveVotes, CONFIG.POLLING_INTERVAL_MS);
+
+    // Langsung sinkronisasi begitu layar HP/tab browser kembali aktif
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) fetchLiveVotes();
+    });
   </script>
 </body>
 </html>
