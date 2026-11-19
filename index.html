@@ -148,7 +148,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
     }
 
@@ -364,7 +364,7 @@
       width: 100%;
       min-width: 0;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
-      transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+      transition: transform 0.1s ease, border-color 0.1s ease, background-color 0.1s ease;
     }
 
     .candidate-item:hover {
@@ -446,7 +446,7 @@
       font-size: 0.8rem;
       letter-spacing: 0.2px;
       cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.15s ease;
+      transition: transform 0.08s ease, box-shadow 0.1s ease;
       white-space: nowrap;
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
@@ -571,7 +571,7 @@
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, #0ea5e9, #10b981);
-      transition: width 0.25s ease-out;
+      transition: width 0.12s ease-out;
     }
 
     .rank-1 .progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
@@ -579,9 +579,9 @@
     .center-notif-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.38);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.32);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -589,7 +589,7 @@
       padding: 20px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.18s ease;
+      transition: opacity 0.1s ease;
     }
 
     .center-notif-backdrop.show {
@@ -606,9 +606,9 @@
       padding: 24px 20px 20px;
       text-align: center;
       box-shadow: 0 24px 55px rgba(15, 23, 42, 0.22);
-      transform: scale(0.8) translateY(12px);
+      transform: scale(0.9) translateY(8px);
       opacity: 0;
-      transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+      transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.1s ease;
       position: relative;
       overflow: hidden;
     }
@@ -667,7 +667,7 @@
       z-index: 80;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.16s ease;
+      transition: opacity 0.1s ease;
     }
 
     .modal-backdrop.active { opacity: 1; pointer-events: auto; }
@@ -683,8 +683,8 @@
       max-height: 88vh;
       overflow-y: auto;
       box-shadow: 0 25px 60px rgba(15, 23, 42, 0.22);
-      transform: scale(0.94);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: scale(0.96);
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .modal-backdrop.active .modal-box { transform: scale(1); }
@@ -700,7 +700,7 @@
       font-size: 0.84rem;
       border: none;
       cursor: pointer;
-      transition: transform 0.12s ease;
+      transition: transform 0.08s ease;
     }
 
     .btn:active:not(:disabled) { transform: scale(0.97); }
@@ -851,7 +851,7 @@
       <section id="sectionGrafik" class="card">
         <div class="card-header">
           <h2 class="card-title">📊 Grafik Real-Time</h2>
-          <span id="totalVotesBadge" class="pill-counter">Total: 0 Suara</span>
+          <span id="totalVotesBadge" class="pill-counter">Total: 0 Suara (0%)</span>
         </div>
         <div class="chart-wrapper" id="chartWrapper">
           <canvas id="voteChart"></canvas>
@@ -963,14 +963,15 @@
 
   <footer>
     <div>Balai Kekarantinaan Kesehatan Kelas I Banjarmasin</div>
-    <span class="gold-shimmer">Designed &amp; Developed by Muliadi</span>
+    <span class="gold-shimmer">Created by Muliadi</span>
   </footer>
 
   <script>
     const CONFIG = {
       SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwrTyY8jCRrHgnz1Th5VRhvgJrRoGjDKfkF_fo9_oUndhMIF4IWDQ9iBbcl772ffPCnbQ/exec",
       DEMO_ADMIN_PIN: "BKK2026",
-      POLLING_INTERVAL_MS: 1500,
+      POLLING_INTERVAL_MS: 600,
+      FETCH_TIMEOUT_MS: 2500,
       STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v4",
       STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v4",
       STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v4",
@@ -995,11 +996,51 @@
     let selectedCandidate = null;
     let voteChart = null;
     let isFetching = false;
-    let isVoteInFlight = false;
+    let pendingVoteCount = 0;
+    let lastMutationAt = 0;
     let verifiedAdminPin = "";
     let notifTimeout = null;
     let editingCandidateId = null;
     let pendingAdminAction = null;
+
+    const barPercentPlugin = {
+      id: "barPercentPlugin",
+      afterDatasetsDraw(chart) {
+        const { ctx, scales } = chart;
+        const meta = chart.getDatasetMeta(0);
+        const dataset = chart.data.datasets[0].data || [];
+        const total = dataset.reduce((a, b) => a + (Number(b) || 0), 0);
+
+        ctx.save();
+        ctx.font = "700 11px 'Plus Jakarta Sans', sans-serif";
+        ctx.textBaseline = "middle";
+
+        meta.data.forEach((bar, index) => {
+          const val = Number(dataset[index]) || 0;
+          const pct = total > 0 ? ((val / total) * 100).toFixed(1) : "0.0";
+          const labelText = `${val} (${pct}%)`;
+          const xPos = Math.min(bar.x + 6, scales.x.right - 4);
+          const fitsInsideRight = bar.x + ctx.measureText(labelText).width + 10 < scales.x.right;
+
+          if (fitsInsideRight) {
+            ctx.fillStyle = "#0f172a";
+            ctx.textAlign = "left";
+            ctx.fillText(labelText, bar.x + 6, bar.y);
+          } else {
+            ctx.fillStyle = val > 0 ? "#ffffff" : "#475569";
+            ctx.textAlign = val > 0 ? "right" : "left";
+            ctx.fillText(labelText, val > 0 ? bar.x - 6 : scales.x.left + 6, bar.y);
+          }
+        });
+
+        ctx.restore();
+      }
+    };
+
+    function formatPercent(votes, totalVotes) {
+      if (!totalVotes || totalVotes <= 0) return "0.0%";
+      return `${((votes / totalVotes) * 100).toFixed(1)}%`;
+    }
 
     function loadInitialCandidates() {
       try {
@@ -1018,7 +1059,7 @@
       } catch (e) {}
     }
 
-    function showCenterNotif(type, title, message, durationMs = 2000) {
+    function showCenterNotif(type, title, message, durationMs = 1500) {
       const backdrop = document.getElementById("centerNotifBackdrop");
       const iconRing = document.getElementById("notifIconRing");
       const titleEl = document.getElementById("notifTitle");
@@ -1102,6 +1143,7 @@
     function renderCandidates() {
       const container = document.getElementById("candidateList");
       const votedIds = getVotedIds();
+      const totalVotes = candidatesData.reduce((sum, item) => sum + item.votes, 0);
 
       document.getElementById("participantCountBadge").textContent = `${candidatesData.length} Peserta`;
 
@@ -1124,6 +1166,7 @@
 
       container.innerHTML = candidatesData.map((item, idx) => {
         const isVoted = votedIds.includes(String(item.id));
+        const pct = formatPercent(item.votes, totalVotes);
         return `
           <div class="candidate-item ${isVoted ? "voted-item" : ""}">
             <div class="candidate-left">
@@ -1133,7 +1176,7 @@
                 <div class="candidate-meta">
                   <span>${escapeHtml(item.keterangan)}</span>
                   <span>•</span>
-                  <span class="vote-count-tag">${item.votes} suara</span>
+                  <span class="vote-count-tag">${item.votes} suara (${pct})</span>
                 </div>
               </div>
             </div>
@@ -1151,7 +1194,7 @@
 
     function renderChartAndStandings() {
       const totalVotes = candidatesData.reduce((sum, item) => sum + item.votes, 0);
-      document.getElementById("totalVotesBadge").textContent = `Total: ${totalVotes} Suara`;
+      document.getElementById("totalVotesBadge").textContent = `Total: ${totalVotes} Suara (${totalVotes > 0 ? "100%" : "0%"})`;
 
       const wrapper = document.getElementById("chartWrapper");
       const dynamicHeight = Math.max(380, candidatesData.length * 42);
@@ -1180,11 +1223,15 @@
               borderSkipped: false
             }]
           },
+          plugins: [barPercentPlugin],
           options: {
             indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 250 },
+            animation: { duration: 120 },
+            layout: {
+              padding: { right: 54 }
+            },
             plugins: {
               legend: { display: false },
               tooltip: {
@@ -1196,7 +1243,7 @@
                 callbacks: {
                   label: function(context) {
                     const val = context.raw || 0;
-                    const pct = totalVotes > 0 ? ((val / totalVotes) * 100).toFixed(1) : 0;
+                    const pct = totalVotes > 0 ? ((val / totalVotes) * 100).toFixed(1) : "0.0";
                     return ` ${val} Suara (${pct}%)`;
                   }
                 }
@@ -1219,13 +1266,13 @@
         voteChart.data.labels = labels;
         voteChart.data.datasets[0].data = values;
         voteChart.data.datasets[0].backgroundColor = barColors;
-        voteChart.update();
+        voteChart.update("none");
       }
 
       const sorted = [...candidatesData].sort((a, b) => b.votes - a.votes);
       const standingsEl = document.getElementById("standingsList");
       standingsEl.innerHTML = sorted.map((item, idx) => {
-        const pct = totalVotes > 0 ? ((item.votes / totalVotes) * 100).toFixed(1) : "0.0";
+        const pctNum = totalVotes > 0 ? ((item.votes / totalVotes) * 100).toFixed(1) : "0.0";
         const medal = idx === 0 && item.votes > 0 ? "🥇" : (idx === 1 && item.votes > 0 ? "🥈" : (idx === 2 && item.votes > 0 ? "🥉" : `#${idx + 1}`));
         return `
           <div class="standing-card ${idx === 0 && item.votes > 0 ? "rank-1" : ""}">
@@ -1234,10 +1281,10 @@
                 <span>${medal}</span>
                 <span class="name-text">${escapeHtml(item.nama)}</span>
               </div>
-              <span class="standing-score">${item.votes} suara (${pct}%)</span>
+              <span class="standing-score">${item.votes} suara (${pctNum}%)</span>
             </div>
             <div class="progress-track">
-              <div class="progress-fill" style="width: ${pct}%"></div>
+              <div class="progress-fill" style="width: ${pctNum}%"></div>
             </div>
           </div>
         `;
@@ -1245,15 +1292,19 @@
     }
 
     async function fetchLiveVotes() {
-      if (isDemoMode || isFetching || isVoteInFlight) return;
+      if (isDemoMode || isFetching || pendingVoteCount > 0) return;
+      if (Date.now() - lastMutationAt < 400) return;
+
       isFetching = true;
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), CONFIG.FETCH_TIMEOUT_MS);
 
       try {
         const url = `${CONFIG.SCRIPT_URL}?deviceId=${encodeURIComponent(getDeviceId())}&_t=${Date.now()}`;
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: controller.signal, cache: "no-store" });
         const result = await response.json();
 
-        if (!isVoteInFlight && result.status === "success" && Array.isArray(result.candidates)) {
+        if (pendingVoteCount === 0 && result.status === "success" && Array.isArray(result.candidates)) {
           candidatesData = result.candidates;
           saveCandidatesCache(candidatesData);
 
@@ -1267,6 +1318,7 @@
         }
       } catch (err) {
       } finally {
+        clearTimeout(timer);
         isFetching = false;
       }
     }
@@ -1286,7 +1338,7 @@
       selectedCandidate = null;
     }
 
-    document.getElementById("confirmVoteBtn").addEventListener("click", async () => {
+    document.getElementById("confirmVoteBtn").addEventListener("click", () => {
       if (!selectedCandidate) return;
       const targetId = String(selectedCandidate.id);
       const targetName = selectedCandidate.nama;
@@ -1299,45 +1351,56 @@
       }
       saveVotedIds([...previousVotedIds, targetId]);
       saveCandidatesCache(candidatesData);
+      lastMutationAt = Date.now();
 
       renderCandidates();
       renderChartAndStandings();
-      showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} telah masuk.`);
+      showCenterNotif("success", "Suara Tercatat!", `Pilihan Anda untuk ${targetName} langsung masuk.`, 1400);
 
       if (isDemoMode) return;
 
-      isVoteInFlight = true;
-      try {
-        const response = await fetch(CONFIG.SCRIPT_URL, {
-          method: "POST",
-          body: JSON.stringify({
-            action: "vote",
-            candidateId: targetId,
-            deviceId: getDeviceId()
-          })
-        });
-
-        const result = await response.json();
-
-        if (result.status === "success") {
-          if (Array.isArray(result.candidates)) {
-            candidatesData = result.candidates;
+      pendingVoteCount += 1;
+      fetch(CONFIG.SCRIPT_URL, {
+        method: "POST",
+        keepalive: true,
+        body: JSON.stringify({
+          action: "vote",
+          candidateId: targetId,
+          deviceId: getDeviceId()
+        })
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.status === "success") {
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+              saveCandidatesCache(candidatesData);
+            }
+            if (Array.isArray(result.votedIds)) {
+              saveVotedIds(result.votedIds);
+            }
+            renderCandidates();
+            renderChartAndStandings();
+          } else if (result.status === "duplicate") {
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+              saveCandidatesCache(candidatesData);
+            }
+            renderCandidates();
+            renderChartAndStandings();
+            showCenterNotif("warning", "Sudah Terkunci", result.message, 1600);
+          } else {
+            if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
+              candidatesData[targetIdx].votes -= 1;
+            }
+            saveVotedIds(previousVotedIds);
             saveCandidatesCache(candidatesData);
+            renderCandidates();
+            renderChartAndStandings();
+            showCenterNotif("error", "Gagal Menyimpan", result.message || "Silakan coba lagi.", 1800);
           }
-          if (Array.isArray(result.votedIds)) {
-            saveVotedIds(result.votedIds);
-          }
-          renderCandidates();
-          renderChartAndStandings();
-        } else if (result.status === "duplicate") {
-          if (Array.isArray(result.candidates)) {
-            candidatesData = result.candidates;
-            saveCandidatesCache(candidatesData);
-          }
-          renderCandidates();
-          renderChartAndStandings();
-          showCenterNotif("warning", "Sudah Terkunci", result.message);
-        } else {
+        })
+        .catch(() => {
           if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
             candidatesData[targetIdx].votes -= 1;
           }
@@ -1345,20 +1408,13 @@
           saveCandidatesCache(candidatesData);
           renderCandidates();
           renderChartAndStandings();
-          showCenterNotif("error", "Gagal Menyimpan", result.message || "Silakan coba lagi.");
-        }
-      } catch (error) {
-        if (targetIdx !== -1 && candidatesData[targetIdx].votes > 0) {
-          candidatesData[targetIdx].votes -= 1;
-        }
-        saveVotedIds(previousVotedIds);
-        saveCandidatesCache(candidatesData);
-        renderCandidates();
-        renderChartAndStandings();
-        showCenterNotif("error", "Koneksi Gagal", "Periksa jaringan internet Anda lalu coba kembali.");
-      } finally {
-        isVoteInFlight = false;
-      }
+          showCenterNotif("error", "Koneksi Gagal", "Periksa jaringan internet Anda lalu coba kembali.", 1800);
+        })
+        .finally(() => {
+          pendingVoteCount = Math.max(0, pendingVoteCount - 1);
+          lastMutationAt = Date.now();
+          setTimeout(fetchLiveVotes, 150);
+        });
     });
 
     function openAdminModal() {
@@ -1380,7 +1436,7 @@
     async function verifyAdminLogin() {
       const pin = document.getElementById("adminPinInput").value.trim();
       if (!pin) {
-        showCenterNotif("warning", "PIN Kosong", "Silakan masukkan PIN Admin terlebih dahulu.", 1800);
+        showCenterNotif("warning", "PIN Kosong", "Silakan masukkan PIN Admin terlebih dahulu.", 1500);
         return;
       }
 
@@ -1394,9 +1450,9 @@
         if (pin === CONFIG.DEMO_ADMIN_PIN) {
           verifiedAdminPin = pin;
           openAdminModal();
-          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1500);
+          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1300);
         } else {
-          showCenterNotif("error", "PIN Salah", "PIN Admin yang Anda masukkan tidak sesuai.", 2000);
+          showCenterNotif("error", "PIN Salah", "PIN Admin yang Anda masukkan tidak sesuai.", 1600);
         }
         return;
       }
@@ -1414,12 +1470,12 @@
             saveCandidatesCache(candidatesData);
           }
           openAdminModal();
-          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1500);
+          showCenterNotif("success", "Akses Diterima", "Selamat datang di Panel Admin.", 1300);
         } else {
-          showCenterNotif("error", "PIN Salah", result.message || "PIN Admin tidak valid.", 2000);
+          showCenterNotif("error", "PIN Salah", result.message || "PIN Admin tidak valid.", 1600);
         }
       } catch (e) {
-        showCenterNotif("error", "Gagal Terhubung", "Tidak dapat menjangkau server Apps Script.", 2200);
+        showCenterNotif("error", "Gagal Terhubung", "Tidak dapat menjangkau server Apps Script.", 1800);
       } finally {
         btn.disabled = false;
         btn.textContent = "Masuk ke Panel Admin";
@@ -1454,32 +1510,22 @@
       const keterangan = noteInput.value.trim() || "Peserta Lomba Bernyanyi";
 
       if (!nama) {
-        showCenterNotif("warning", "Nama Kosong", "Isi nama peserta baru terlebih dahulu.", 1800);
+        showCenterNotif("warning", "Nama Kosong", "Isi nama peserta baru terlebih dahulu.", 1500);
         return;
       }
 
-      const btn = document.getElementById("addCandidateBtn");
-      btn.disabled = true;
-      btn.textContent = "Menyimpan...";
+      const newItem = { id: "P" + Date.now(), nama: nama, keterangan: keterangan, votes: 0 };
+      candidatesData.push(newItem);
+      saveCandidatesCache(candidatesData);
+      lastMutationAt = Date.now();
+      nameInput.value = "";
+      noteInput.value = "";
+      renderAdminList();
+      renderCandidates();
+      renderChartAndStandings();
+      showCenterNotif("success", "Peserta Ditambahkan", `${nama} langsung masuk ke daftar lomba.`, 1400);
 
-      if (isDemoMode) {
-        candidatesData.push({
-          id: "P" + Date.now(),
-          nama: nama,
-          keterangan: keterangan,
-          votes: 0
-        });
-        saveCandidatesCache(candidatesData);
-        nameInput.value = "";
-        noteInput.value = "";
-        btn.disabled = false;
-        btn.textContent = "+ Tambah Peserta Baru";
-        renderAdminList();
-        renderCandidates();
-        renderChartAndStandings();
-        showCenterNotif("success", "Peserta Ditambahkan", `${nama} berhasil masuk ke daftar lomba.`);
-        return;
-      }
+      if (isDemoMode) return;
 
       try {
         const res = await fetch(CONFIG.SCRIPT_URL, {
@@ -1492,24 +1538,14 @@
           })
         });
         const result = await res.json();
-        if (result.status === "success") {
+        if (result.status === "success" && Array.isArray(result.candidates)) {
           candidatesData = result.candidates;
           saveCandidatesCache(candidatesData);
-          nameInput.value = "";
-          noteInput.value = "";
           renderAdminList();
           renderCandidates();
           renderChartAndStandings();
-          showCenterNotif("success", "Peserta Ditambahkan", `${nama} berhasil disimpan ke database.`);
-        } else {
-          showCenterNotif("error", "Gagal Menambah", result.message || "Terjadi kesalahan.");
         }
-      } catch (e) {
-        showCenterNotif("error", "Koneksi Gagal", "Gagal menyimpan data ke server.");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "+ Tambah Peserta Baru";
-      }
+      } catch (e) {}
     }
 
     function openEditModal(id) {
@@ -1532,30 +1568,25 @@
       const newNote = document.getElementById("editCandidateNoteInput").value.trim() || "Peserta Lomba Bernyanyi";
 
       if (!newName) {
-        showCenterNotif("warning", "Nama Wajib Diisi", "Nama peserta tidak boleh kosong.", 1800);
+        showCenterNotif("warning", "Nama Wajib Diisi", "Nama peserta tidak boleh kosong.", 1500);
         return;
       }
 
-      const btn = document.getElementById("saveEditCandidateBtn");
-      btn.disabled = true;
-      btn.textContent = "Menyimpan...";
-
-      if (isDemoMode) {
-        const target = candidatesData.find(c => String(c.id) === String(editingCandidateId));
-        if (target) {
-          target.nama = newName;
-          target.keterangan = newNote;
-        }
-        saveCandidatesCache(candidatesData);
-        btn.disabled = false;
-        btn.textContent = "Simpan Perubahan";
-        closeEditModal();
-        renderAdminList();
-        renderCandidates();
-        renderChartAndStandings();
-        showCenterNotif("success", "Data Diperbarui", `Perubahan untuk ${newName} telah disimpan.`);
-        return;
+      const targetId = editingCandidateId;
+      const target = candidatesData.find(c => String(c.id) === String(targetId));
+      if (target) {
+        target.nama = newName;
+        target.keterangan = newNote;
       }
+      saveCandidatesCache(candidatesData);
+      lastMutationAt = Date.now();
+      closeEditModal();
+      renderAdminList();
+      renderCandidates();
+      renderChartAndStandings();
+      showCenterNotif("success", "Data Diperbarui", `Perubahan untuk ${newName} langsung diterapkan.`, 1400);
+
+      if (isDemoMode) return;
 
       try {
         const res = await fetch(CONFIG.SCRIPT_URL, {
@@ -1563,29 +1594,20 @@
           body: JSON.stringify({
             action: "admin_edit",
             pin: verifiedAdminPin,
-            id: editingCandidateId,
+            id: targetId,
             nama: newName,
             keterangan: newNote
           })
         });
         const result = await res.json();
-        if (result.status === "success") {
+        if (result.status === "success" && Array.isArray(result.candidates)) {
           candidatesData = result.candidates;
           saveCandidatesCache(candidatesData);
-          closeEditModal();
           renderAdminList();
           renderCandidates();
           renderChartAndStandings();
-          showCenterNotif("success", "Data Diperbarui", `Perubahan untuk ${newName} berhasil disimpan.`);
-        } else {
-          showCenterNotif("error", "Gagal Mengubah", result.message || "Terjadi kesalahan.");
         }
-      } catch (e) {
-        showCenterNotif("error", "Koneksi Gagal", "Tidak dapat memperbarui data peserta.");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Simpan Perubahan";
-      }
+      } catch (e) {}
     }
 
     function openAdminActionConfirm(type, id = null) {
@@ -1622,17 +1644,17 @@
       if (!pendingAdminAction) return;
       const { type, id } = pendingAdminAction;
       closeAdminConfirmModal();
+      lastMutationAt = Date.now();
 
       if (type === "delete") {
-        if (isDemoMode) {
-          candidatesData = candidatesData.filter(c => String(c.id) !== String(id));
-          saveCandidatesCache(candidatesData);
-          renderAdminList();
-          renderCandidates();
-          renderChartAndStandings();
-          showCenterNotif("success", "Peserta Dihapus", "Peserta telah dihapus dari daftar.");
-          return;
-        }
+        candidatesData = candidatesData.filter(c => String(c.id) !== String(id));
+        saveCandidatesCache(candidatesData);
+        renderAdminList();
+        renderCandidates();
+        renderChartAndStandings();
+        showCenterNotif("success", "Peserta Dihapus", "Peserta langsung dihapus dari daftar.", 1400);
+
+        if (isDemoMode) return;
 
         try {
           const res = await fetch(CONFIG.SCRIPT_URL, {
@@ -1644,27 +1666,20 @@
             })
           });
           const result = await res.json();
-          if (result.status === "success") {
+          if (result.status === "success" && Array.isArray(result.candidates)) {
             candidatesData = result.candidates;
             saveCandidatesCache(candidatesData);
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
-            showCenterNotif("success", "Peserta Dihapus", "Data peserta berhasil dihapus dari database.");
-          } else {
-            showCenterNotif("error", "Gagal Menghapus", result.message || "Terjadi kesalahan.");
           }
-        } catch (e) {
-          showCenterNotif("error", "Koneksi Gagal", "Tidak dapat menghubungi server.");
-        }
+        } catch (e) {}
       } else if (type === "unlock") {
         clearAllLocksLocally();
         renderCandidates();
+        showCenterNotif("success", "Kunci Dibuka", "Semua tombol peserta langsung bisa diklik kembali.", 1400);
 
-        if (isDemoMode) {
-          showCenterNotif("success", "Kunci Dibuka", "Semua tombol peserta sudah bisa diklik kembali.");
-          return;
-        }
+        if (isDemoMode) return;
 
         try {
           const res = await fetch(CONFIG.SCRIPT_URL, {
@@ -1681,21 +1696,12 @@
               candidatesData = result.candidates;
               saveCandidatesCache(candidatesData);
             }
-            if (Array.isArray(result.votedIds)) {
-              saveVotedIds(result.votedIds);
-            } else {
-              saveVotedIds([]);
-            }
+            saveVotedIds(Array.isArray(result.votedIds) ? result.votedIds : []);
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
-            showCenterNotif("success", "Kunci Dibuka", "Semua kunci peserta berhasil dibuka.");
-          } else {
-            showCenterNotif("success", "Kunci Lokal Dibuka", "Tombol di perangkat ini sudah terbuka kembali.");
           }
-        } catch (e) {
-          showCenterNotif("success", "Kunci Lokal Dibuka", "Tombol di perangkat ini sudah terbuka kembali.");
-        }
+        } catch (e) {}
       } else if (type === "reset") {
         clearAllLocksLocally();
         candidatesData.forEach(c => c.votes = 0);
@@ -1703,11 +1709,9 @@
         renderAdminList();
         renderCandidates();
         renderChartAndStandings();
+        showCenterNotif("success", "Reset Berhasil", "Suara langsung kembali ke 0 dan kunci dibuka.", 1400);
 
-        if (isDemoMode) {
-          showCenterNotif("success", "Suara & Kunci Di-reset", "Semua suara kembali ke 0 dan kunci dibuka.");
-          return;
-        }
+        if (isDemoMode) return;
 
         try {
           const res = await fetch(CONFIG.SCRIPT_URL, {
@@ -1724,21 +1728,12 @@
               candidatesData = result.candidates;
               saveCandidatesCache(candidatesData);
             }
-            if (Array.isArray(result.votedIds)) {
-              saveVotedIds(result.votedIds);
-            } else {
-              saveVotedIds([]);
-            }
+            saveVotedIds(Array.isArray(result.votedIds) ? result.votedIds : []);
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
-            showCenterNotif("success", "Reset Berhasil", "Seluruh suara kembali ke 0 dan kunci dibuka.");
-          } else {
-            showCenterNotif("error", "Gagal Reset", result.message || "Terjadi kesalahan.");
           }
-        } catch (e) {
-          showCenterNotif("error", "Koneksi Gagal", "Tidak dapat me-reset data di server.");
-        }
+        } catch (e) {}
       }
     });
 
@@ -1760,6 +1755,7 @@
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) fetchLiveVotes();
     });
+    window.addEventListener("focus", fetchLiveVotes);
   </script>
 </body>
 </html>
