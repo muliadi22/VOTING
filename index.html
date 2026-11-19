@@ -708,6 +708,7 @@
     .btn-cancel { flex: 1; background: #f1f5f9; color: var(--text-body); border: 1px solid var(--border-strong); }
     .btn-confirm { flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28); }
     .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; font-weight: 800; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.28); }
+    .btn-unlock { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-weight: 800; padding: 9px 14px; border-radius: 10px; font-size: 0.78rem; box-shadow: 0 3px 10px rgba(2, 132, 199, 0.25); }
     .btn-edit-sm { background: #fef3c7; border: 1px solid #fcd34d; color: #b45309; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
     .btn-del-sm { background: #fee2e2; border: 1px solid #fca5a5; color: #dc2626; padding: 7px 10px; border-radius: 9px; font-size: 0.75rem; }
 
@@ -720,13 +721,15 @@
     .admin-add-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     @media (max-width: 520px) { .admin-add-inputs { grid-template-columns: 1fr; } }
 
-    .admin-candidate-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; max-height: 300px; overflow-y: auto; }
+    .admin-candidate-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; max-height: 270px; overflow-y: auto; }
     .admin-row-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .admin-row-info { min-width: 0; flex: 1; }
     .admin-row-info strong { display: block; font-size: 0.86rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .admin-row-info span { font-size: 0.74rem; color: var(--text-muted); }
     .admin-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
-    .danger-zone { background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    .unlock-zone { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .danger-zone { background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 
     footer {
       margin-top: 28px;
@@ -889,7 +892,7 @@
       </div>
 
       <div id="adminLoginSection">
-        <p>Masukkan PIN Admin untuk mengelola peserta atau me-reset hasil voting.</p>
+        <p>Masukkan PIN Admin untuk mengelola peserta, membuka kunci, atau me-reset hasil voting.</p>
         <div class="form-group">
           <label for="adminPinInput">PIN Admin</label>
           <input type="password" id="adminPinInput" class="form-input" placeholder="Masukkan PIN Admin..." />
@@ -908,10 +911,18 @@
 
         <div id="adminCandidateList" class="admin-candidate-list"></div>
 
+        <div class="unlock-zone">
+          <div>
+            <strong style="font-size: 0.84rem; color: #0369a1; display: block;">Buka Kunci Semua Peserta</strong>
+            <span style="font-size: 0.74rem; color: var(--text-body);">Aktifkan kembali tombol Vote tanpa mengubah jumlah suara.</span>
+          </div>
+          <button class="btn btn-unlock" id="unlockVotesBtn" onclick="openAdminActionConfirm('unlock')">Buka Semua Kunci</button>
+        </div>
+
         <div class="danger-zone">
           <div>
-            <strong style="font-size: 0.84rem; color: #b91c1c; display: block;">Reset Semua Suara ke 0</strong>
-            <span style="font-size: 0.74rem; color: var(--text-body);">Bersihkan seluruh data suara sebelum lomba dimulai.</span>
+            <strong style="font-size: 0.84rem; color: #b91c1c; display: block;">Reset Semua Suara &amp; Kunci ke 0</strong>
+            <span style="font-size: 0.74rem; color: var(--text-body);">Kembalikan suara ke 0 dan hapus seluruh kunci setelah uji coba.</span>
           </div>
           <button class="btn btn-del-sm" style="font-weight: 800; padding: 9px 14px;" id="resetVotesBtn" onclick="openAdminActionConfirm('reset')">Reset ke 0</button>
         </div>
@@ -960,9 +971,9 @@
       SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwrTyY8jCRrHgnz1Th5VRhvgJrRoGjDKfkF_fo9_oUndhMIF4IWDQ9iBbcl772ffPCnbQ/exec",
       DEMO_ADMIN_PIN: "BKK2026",
       POLLING_INTERVAL_MS: 1500,
-      STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v3",
-      STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v3",
-      STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v3",
+      STORAGE_KEY_DEVICE: "bkk_evoting_device_id_v4",
+      STORAGE_KEY_VOTED_IDS: "bkk_evoting_voted_ids_v4",
+      STORAGE_KEY_CACHE: "bkk_evoting_candidates_cache_v4",
       DEFAULT_CANDIDATES: [
         { id: "P01", nama: "Lingga Susanto", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
         { id: "P02", nama: "Pak Ded’So", keterangan: "Peserta Lomba Bernyanyi", votes: 0 },
@@ -1069,7 +1080,7 @@
       try {
         const raw = localStorage.getItem(CONFIG.STORAGE_KEY_VOTED_IDS);
         const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
+        return Array.isArray(parsed) ? parsed.map(String) : [];
       } catch (e) {
         return [];
       }
@@ -1080,6 +1091,14 @@
       localStorage.setItem(CONFIG.STORAGE_KEY_VOTED_IDS, JSON.stringify(uniqueIds));
     }
 
+    function clearAllLocksLocally() {
+      localStorage.removeItem(CONFIG.STORAGE_KEY_VOTED_IDS);
+      try {
+        localStorage.removeItem("bkk_evoting_voted_ids_v3");
+        localStorage.removeItem("bkk_evoting_voted_ids_v2");
+      } catch (e) {}
+    }
+
     function renderCandidates() {
       const container = document.getElementById("candidateList");
       const votedIds = getVotedIds();
@@ -1088,7 +1107,7 @@
 
       const banner = document.getElementById("statusBanner");
       const votedNames = candidatesData
-        .filter(c => votedIds.includes(c.id))
+        .filter(c => votedIds.includes(String(c.id)))
         .map(c => c.nama);
 
       if (votedNames.length > 0) {
@@ -1104,7 +1123,7 @@
       }
 
       container.innerHTML = candidatesData.map((item, idx) => {
-        const isVoted = votedIds.includes(item.id);
+        const isVoted = votedIds.includes(String(item.id));
         return `
           <div class="candidate-item ${isVoted ? "voted-item" : ""}">
             <div class="candidate-left">
@@ -1239,7 +1258,7 @@
           saveCandidatesCache(candidatesData);
 
           if (Array.isArray(result.votedIds)) {
-            saveVotedIds([...getVotedIds(), ...result.votedIds]);
+            saveVotedIds(result.votedIds);
           }
 
           renderCandidates();
@@ -1253,8 +1272,8 @@
     }
 
     function openConfirmModal(candidateId) {
-      if (getVotedIds().includes(candidateId)) return;
-      selectedCandidate = candidatesData.find(c => c.id === candidateId);
+      if (getVotedIds().includes(String(candidateId))) return;
+      selectedCandidate = candidatesData.find(c => String(c.id) === String(candidateId));
       if (!selectedCandidate) return;
 
       document.getElementById("modalText").innerHTML =
@@ -1269,12 +1288,12 @@
 
     document.getElementById("confirmVoteBtn").addEventListener("click", async () => {
       if (!selectedCandidate) return;
-      const targetId = selectedCandidate.id;
+      const targetId = String(selectedCandidate.id);
       const targetName = selectedCandidate.nama;
       closeConfirmModal();
 
       const previousVotedIds = getVotedIds();
-      const targetIdx = candidatesData.findIndex(c => c.id === targetId);
+      const targetIdx = candidatesData.findIndex(c => String(c.id) === targetId);
       if (targetIdx !== -1) {
         candidatesData[targetIdx].votes += 1;
       }
@@ -1306,7 +1325,7 @@
             saveCandidatesCache(candidatesData);
           }
           if (Array.isArray(result.votedIds)) {
-            saveVotedIds([...getVotedIds(), ...result.votedIds]);
+            saveVotedIds(result.votedIds);
           }
           renderCandidates();
           renderChartAndStandings();
@@ -1494,7 +1513,7 @@
     }
 
     function openEditModal(id) {
-      const target = candidatesData.find(c => c.id === id);
+      const target = candidatesData.find(c => String(c.id) === String(id));
       if (!target) return;
       editingCandidateId = id;
       document.getElementById("editCandidateNameInput").value = target.nama;
@@ -1522,7 +1541,7 @@
       btn.textContent = "Menyimpan...";
 
       if (isDemoMode) {
-        const target = candidatesData.find(c => c.id === editingCandidateId);
+        const target = candidatesData.find(c => String(c.id) === String(editingCandidateId));
         if (target) {
           target.nama = newName;
           target.keterangan = newNote;
@@ -1573,15 +1592,22 @@
       pendingAdminAction = { type, id };
       const titleEl = document.getElementById("adminConfirmTitle");
       const textEl = document.getElementById("adminConfirmText");
+      const execBtn = document.getElementById("adminConfirmExecBtn");
 
       if (type === "delete") {
-        const target = candidatesData.find(c => c.id === id);
+        const target = candidatesData.find(c => String(c.id) === String(id));
         if (!target) return;
         titleEl.textContent = "Hapus Peserta?";
         textEl.innerHTML = `Anda yakin ingin menghapus <strong>${escapeHtml(target.nama)}</strong> dari daftar lomba?`;
+        execBtn.style.background = "var(--danger)";
+      } else if (type === "unlock") {
+        titleEl.textContent = "Buka Kunci Semua Peserta?";
+        textEl.innerHTML = `Seluruh tombol peserta yang terkunci akan dibuka kembali tanpa mengubah jumlah suara saat ini.`;
+        execBtn.style.background = "#0284c7";
       } else if (type === "reset") {
-        titleEl.textContent = "Reset Semua Suara ke 0?";
-        textEl.innerHTML = `Seluruh perolehan suara peserta akan dikembalikan ke <strong>0</strong> dan riwayat voting dihapus.`;
+        titleEl.textContent = "Reset Semua Suara & Kunci ke 0?";
+        textEl.innerHTML = `Seluruh perolehan suara akan dikembalikan ke <strong>0</strong> dan semua kunci vote akan dihapus.`;
+        execBtn.style.background = "var(--danger)";
       }
 
       document.getElementById("adminConfirmModal").classList.add("active");
@@ -1599,7 +1625,7 @@
 
       if (type === "delete") {
         if (isDemoMode) {
-          candidatesData = candidatesData.filter(c => c.id !== id);
+          candidatesData = candidatesData.filter(c => String(c.id) !== String(id));
           saveCandidatesCache(candidatesData);
           renderAdminList();
           renderCandidates();
@@ -1631,16 +1657,55 @@
         } catch (e) {
           showCenterNotif("error", "Koneksi Gagal", "Tidak dapat menghubungi server.");
         }
-      } else if (type === "reset") {
-        localStorage.removeItem(CONFIG.STORAGE_KEY_VOTED_IDS);
+      } else if (type === "unlock") {
+        clearAllLocksLocally();
+        renderCandidates();
 
         if (isDemoMode) {
-          candidatesData.forEach(c => c.votes = 0);
-          saveCandidatesCache(candidatesData);
-          renderAdminList();
-          renderCandidates();
-          renderChartAndStandings();
-          showCenterNotif("success", "Suara Di-reset", "Semua suara telah dikembalikan ke 0.");
+          showCenterNotif("success", "Kunci Dibuka", "Semua tombol peserta sudah bisa diklik kembali.");
+          return;
+        }
+
+        try {
+          const res = await fetch(CONFIG.SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "admin_unlock_votes",
+              pin: verifiedAdminPin,
+              deviceId: getDeviceId()
+            })
+          });
+          const result = await res.json();
+          if (result.status === "success") {
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+              saveCandidatesCache(candidatesData);
+            }
+            if (Array.isArray(result.votedIds)) {
+              saveVotedIds(result.votedIds);
+            } else {
+              saveVotedIds([]);
+            }
+            renderAdminList();
+            renderCandidates();
+            renderChartAndStandings();
+            showCenterNotif("success", "Kunci Dibuka", "Semua kunci peserta berhasil dibuka.");
+          } else {
+            showCenterNotif("success", "Kunci Lokal Dibuka", "Tombol di perangkat ini sudah terbuka kembali.");
+          }
+        } catch (e) {
+          showCenterNotif("success", "Kunci Lokal Dibuka", "Tombol di perangkat ini sudah terbuka kembali.");
+        }
+      } else if (type === "reset") {
+        clearAllLocksLocally();
+        candidatesData.forEach(c => c.votes = 0);
+        saveCandidatesCache(candidatesData);
+        renderAdminList();
+        renderCandidates();
+        renderChartAndStandings();
+
+        if (isDemoMode) {
+          showCenterNotif("success", "Suara & Kunci Di-reset", "Semua suara kembali ke 0 dan kunci dibuka.");
           return;
         }
 
@@ -1649,17 +1714,25 @@
             method: "POST",
             body: JSON.stringify({
               action: "admin_reset_votes",
-              pin: verifiedAdminPin
+              pin: verifiedAdminPin,
+              deviceId: getDeviceId()
             })
           });
           const result = await res.json();
           if (result.status === "success") {
-            candidatesData = result.candidates;
-            saveCandidatesCache(candidatesData);
+            if (Array.isArray(result.candidates)) {
+              candidatesData = result.candidates;
+              saveCandidatesCache(candidatesData);
+            }
+            if (Array.isArray(result.votedIds)) {
+              saveVotedIds(result.votedIds);
+            } else {
+              saveVotedIds([]);
+            }
             renderAdminList();
             renderCandidates();
             renderChartAndStandings();
-            showCenterNotif("success", "Reset Berhasil", "Seluruh perolehan suara kembali ke 0.");
+            showCenterNotif("success", "Reset Berhasil", "Seluruh suara kembali ke 0 dan kunci dibuka.");
           } else {
             showCenterNotif("error", "Gagal Reset", result.message || "Terjadi kesalahan.");
           }
